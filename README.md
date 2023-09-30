@@ -70,7 +70,35 @@ Let's explain the overall pipeline of the NeRF architecture:
 </div>
 
 ### 1.2 Volume Rendering
+Recall that density, σ, can be binary, where it equals ```1``` if the point is on the object's surface (i.e., it intersects with the scene geometry) and ```0``` if it is in empty space. Hence, everywhere in space, there is a value that represents density and color at that point in space.
 
+We start by shooting a ray (camera ray) in our scene as shown below by Ray 1 and Ray 2. The equation of the camera ray is dependent on the origin, **o**, and the viewing direction, **d** for different time t.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/5aa4118c-f427-4a19-a3c2-de52d4a3c30e" width="10%" />
+</p>
+
+We then sample a few points along the ray. For each point, we record the density and color at this point in space. We calculate the expected color as such:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/d7aa1eb3-722f-4ec2-83f9-26e18cde34b8" width="30%" />
+</p>
+
+- From the equation above, we observe we have the product of the density at point **r**(t): ```(σ(r(t)))``` which is independent of viewing direction **d** and the color at point **r**(t) from viewing direction **d**: ```(c(r(t),d))```. This means that if the density is 0, the color has no impact. But if we have a high density, the color has a bigger weight.
+
+- We also have the term ```T(t)``` which is defined as the ```accumulated transmittance```.
+
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/5e70e0bc-ac28-4816-b27f-f53b0d97b501" width="60%" />
+</p>
+<div align="center">
+    <p>Image Source: <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">Spherical coordinate system</a></p>
+</div>
+
+
+
+Create a 2D projection from a discretely sampled 3D data set ○ Given camera poses and intrinsics, render a 2D image from a 3D volumetric representation
 
 
 ### 1.3 Improvement 1: Positional Encoding
@@ -93,3 +121,4 @@ Let's explain the overall pipeline of the NeRF architecture:
 3. https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs
 4. https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher
 5. https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/
+6. https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers
