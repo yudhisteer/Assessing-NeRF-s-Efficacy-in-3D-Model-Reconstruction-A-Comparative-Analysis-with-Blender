@@ -115,7 +115,7 @@ We then sample a few points along the ray. For each point, we record the density
 3. The author does not solve this integration numerically but instead uses the ```quadrature rule```.
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6c3b7d5b-77f6-4ac5-bb42-fc480d374ad4" width="30%" />
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/e74f3013-bae2-487d-8485-f8d73f7643a9" width="30%" />
 </p>
 
 4. This estimation process computes the color ![CodeCogsEqn (12)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/38bc9dd1-b888-4520-b263-e9f2f5158c64) of any camera ray by summing up contributions from each segment of the ray's path.
