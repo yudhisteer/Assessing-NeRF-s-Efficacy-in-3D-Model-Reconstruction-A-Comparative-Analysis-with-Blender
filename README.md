@@ -23,7 +23,7 @@
 
 
 ### 1.1 Volumetric Scene Representation
-What has been done before NeRF is to have a set of images and use 3D CNN to predict a discrete volumetric representation such as a **Voxel Grid**. Though this technique has demonstrated impressive results, computing and storing these large voxel grids can  become computationally expensive for large and high-resolution scenes. What NeRF does is represent a scene as a **continuous** ```5D function``` which consists of **spatial 3D location** ```X = (x,y,z)``` of a point and the **2D viewing direction** ```d = (θ, φ)```. This is the **input**.
+What has been done before NeRF is to have a set of images and use 3D CNN to predict a discrete volumetric representation such as a **Voxel Grid**. Though this technique has demonstrated impressive results, computing and storing these large voxel grids can  become computationally expensive for large and high-resolution scenes. What NeRF does is represent a scene as a **continuous** ```5D function``` which consists of **spatial 3D location** ```x = (x,y,z)``` of a point and the **2D viewing direction** ```d = (θ, φ)```. This is the **input**.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/29a33610-e1d3-4800-a1eb-2e2f01777cf0" width="70%" />
@@ -56,6 +56,8 @@ Let's explain the overall pipeline of the NeRF architecture:
 
 **d)** Since this rendering function is differentiable, we can improve our scene representation by minimizing the difference between the images we synthesize and the ground truth images we've observed
 
+Moreover, the author argues that they promote multiview consistency in the representation by constraining the network to estimate the **volume density**, σ as a function of the s**patial position** (**x**) exclusively. At the same time, they enable the prediction of RGB color (**c**) as a function of both the **spatial location** **and** the **viewing direction**.
+
 
 **Note:**
 
@@ -68,6 +70,12 @@ Let's explain the overall pipeline of the NeRF architecture:
 <div align="center">
     <p>Image Source: <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">Spherical coordinate system</a></p>
 </div>
+
+
+
+
+
+
 
 ### 1.2 Volume Rendering
 Recall that density, σ, can be binary, where it equals ```1``` if the point is on the object's surface (i.e., it intersects with the scene geometry) and ```0``` if it is in empty space. Hence, everywhere in space, there is a value that represents density and color at that point in space.
@@ -94,10 +102,36 @@ We then sample a few points along the ray. For each point, we record the density
 
 - From the equation above, we observe we have the product of the density at point **r**(t): ```(σ(r(t)))``` which is independent of viewing direction **d** and the color at point **r**(t) from viewing direction **d**: ```(c(r(t),d))```. This means that if the density is 0, the color has no impact. But if we have a high density, the color has a bigger weight.
 
-- We also have the term ```T(t)``` which is defined as the ```accumulated transmittance```. This refers to how much light is transmitted or attenuated along a viewing ray as it passes through the scene. So basically we will compute the density accumulated. Consider a scenario where there are two objects, A and B, positioned such that A is situated behind B. In this arrangement, A becomes obscured or "occluded" by B. Consequently, as a ray traverses through B, density accumulation occurs along that ray. When the ray subsequently intersects with A, it won't significantly affect the color because the density has already been accumulated. However, if the ray extends into empty space and encounters another object, it will have an impact on the final color because, in this case, density accumulation has not yet taken place, and the first object encountered will influence the color as the ray progresses.
+- We also have the term ```T(t)``` which is defined as the ```accumulated transmittance```. This refers to how much light is transmitted or attenuated along a viewing ray as it passes through the scene. So basically we will compute the density accumulated. Consider a scenario where there are two objects, A and B, positioned such that A is situated behind B. In this arrangement, A becomes obscured or "occluded" by B. Consequently, as a ray traverses through B, density accumulation occurs along that ray. When the ray subsequently intersects with A, it won't significantly affect the color because the density has already been accumulated. However, if the ray extends into empty space and encounters another object, it will have an impact on the final color because, in this case, density accumulation has not yet taken place, and the first object encountered will influence the color as the ray progresses. In other words, it quantifies the probability that the ray travels from ```tn``` to ```t``` without encountering any other particles along its path.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/d408153b-0ec9-443f-996b-778f56b6aa6a" width="20%" />
+</p>
+
+1. To compute the color of a camera array that passes through the volume we need to estimate a continuous 1d line integral along that ray.
+
+2. They do this by querying the MLP at multiple sample points within the range of starting and ending distances, denoted as t1 and tn.
+
+3. The author does not solve this integration numerically but instead uses the ```quadrature rule```.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6c3b7d5b-77f6-4ac5-bb42-fc480d374ad4" width="40%" />
+</p>
+
+4. This estimation process computes the color ![CodeCogsEqn (12)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/38bc9dd1-b888-4520-b263-e9f2f5158c64) of any camera ray by summing up contributions from each segment of the ray's path.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6eec67d0-3eb1-4b24-bbd5-73b575671d6e" width="25%" />
+</p>
+
+5. Each contribution includes the color of the segment ![CodeCogsEqn (13)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8e1d0b01-a684-45d9-877c-50ddae651da2), which is weighted by the accumulated transmittance, ![CodeCogsEqn (14)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2f47303e-24b2-47f4-a512-3f96851a521c), which computes how much light is blocked earlier along the ray _and_ ![CodeCogsEqn (15)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8262a74f-dfc8-43e4-918b-585bdcf9d1a3) which is how much light is contributed by ray segment i, which is a function of the segment's length and its estimated volume density.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/4547ce16-bb95-49cc-a316-b5d1865d368a" width="15%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/52876cd2-5491-4278-b0be-9ade4c42d677" width="15%" />
 </p>
 
 
@@ -105,7 +139,7 @@ We then sample a few points along the ray. For each point, we record the density
 
 
 
-Create a 2D projection from a discretely sampled 3D data set ○ Given camera poses and intrinsics, render a 2D image from a 3D volumetric representation
+
 
 
 ### 1.3 Improvement 1: Positional Encoding
