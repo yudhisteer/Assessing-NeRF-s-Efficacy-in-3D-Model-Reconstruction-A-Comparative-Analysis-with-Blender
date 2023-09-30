@@ -127,11 +127,11 @@ We then sample a few points along the ray. For each point, we record the density
 5. Each contribution includes the color of the segment ![CodeCogsEqn (13)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8e1d0b01-a684-45d9-877c-50ddae651da2), which is weighted by the accumulated transmittance, ![CodeCogsEqn (14)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2f47303e-24b2-47f4-a512-3f96851a521c), which computes how much light is blocked earlier along the ray _and_ ![CodeCogsEqn (15)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8262a74f-dfc8-43e4-918b-585bdcf9d1a3) which is how much light is contributed by ray segment i, which is a function of the segment's length and its estimated volume density.
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/4547ce16-bb95-49cc-a316-b5d1865d368a" width="15%" />
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/4547ce16-bb95-49cc-a316-b5d1865d368a" width="17%" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/52876cd2-5491-4278-b0be-9ade4c42d677" width="15%" />
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/52876cd2-5491-4278-b0be-9ade4c42d677" width="17%" />
 </p>
 
 
