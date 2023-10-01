@@ -136,6 +136,9 @@ We then sample a few points along the ray. For each point, we record the density
 
 
 
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2cbb0834-8d8e-4ef1-a7e1-0c0eff2d5092" width="55%" />
+</p>
 
 
 
