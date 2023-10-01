@@ -134,10 +134,11 @@ We then sample a few points along the ray. For each point, we record the density
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/52876cd2-5491-4278-b0be-9ade4c42d677" width="17%" />
 </p>
 
+The author also argues that they allow the color of any 3D point to vary as a function of the **viewing direction** as well as **3D position**. If we change the direction inputs for a fixed (x,y,z) location, we can visualize what view-dependent effects have been encoded by the network. Below is a visualization of two different points in a synthetic scene. It demonstrates how for a fixed 3D location adding view directions as an extra input allows the network to represent realistic view-dependent appearance effects
 
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2cbb0834-8d8e-4ef1-a7e1-0c0eff2d5092" width="55%" />
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2cbb0834-8d8e-4ef1-a7e1-0c0eff2d5092" width="60%" />
 </p>
 
 
