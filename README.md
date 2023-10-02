@@ -8,9 +8,9 @@
      - Improvement 1: Positional Encoding
      - Improvement 2: Hierarchical Volume Sampling
 
-3. 3D Model using Blender
+2. 3D Model using Blender
 
-4. Training NeRF
+3. Training NeRF
 
 
 ---------------
@@ -150,6 +150,19 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 
 
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
+
+----------
+
+## 2. 3D Model using Blender
+
+
+
+
+
+
+---------------
+
+## 3. Training NeRF
 
 
 
