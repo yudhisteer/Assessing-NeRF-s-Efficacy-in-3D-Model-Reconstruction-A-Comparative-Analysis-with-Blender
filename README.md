@@ -180,3 +180,8 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 4. https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher
 5. https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/
 6. https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers
+7. https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno
+8. https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers
+9. https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers
+10. https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee
+11. https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch
