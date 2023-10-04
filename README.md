@@ -2,6 +2,12 @@
 
 
 ## Plan of Action
+
+0. Prerequisites
+      - Ray Tracing
+      - Ray Casting
+      - Ray Marching
+
 1. Understanding NeRF
      - Volumetric Scene Representation
      - Volume Rendering
@@ -14,6 +20,13 @@
 
 
 ---------------
+## 0. Prerequisites
+
+
+
+
+
+--------------------------
 
 ## 1. Understanding NeRF
 
