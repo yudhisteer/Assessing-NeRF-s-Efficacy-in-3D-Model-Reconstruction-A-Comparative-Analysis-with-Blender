@@ -7,6 +7,7 @@
       - Ray Tracing
       - Ray Casting
       - Ray Marching
+      - NeRFing a sphere
 
 1. Understanding NeRF
      - Volumetric Scene Representation
@@ -21,6 +22,13 @@
 
 ---------------
 ## 0. Prerequisites
+
+### 0.1 Ray Tracing
+
+
+### 0.2 Ray Casting
+
+### 0.3 Ray Marching
 
 NeRF (Neural Radiance Fields) uses a concept similar to ray casting but differs in some key aspects. Here's how NeRF works:
 
@@ -40,6 +48,8 @@ Casts Rays: NeRF virtually casts rays from the camera's viewpoint through each p
 
 Into the 3D Scene: These rays extend into the 3D scene, essentially probing the scene's geometry and appearance. The purpose of casting rays from each pixel is to collect information about how light interacts with the scene, which helps NeRF build a 3D representation of the scene. The algorithm uses this information to reconstruct the 3D scene's geometry and appearance. By gathering data from multiple rays cast from different pixels in the image, NeRF can create a more accurate and detailed 3D model.  the phrase "casts rays into the 3D scene" means that NeRF sends out virtual rays from the camera's viewpoint through each pixel in the 2D image to understand and model the 3D scene.
 
+
+### 0.4 NeRFing a sphere
 
 <table>
   <tr>
