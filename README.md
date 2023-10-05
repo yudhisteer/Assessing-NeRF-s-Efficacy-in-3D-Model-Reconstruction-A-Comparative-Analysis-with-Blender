@@ -23,7 +23,18 @@
 ## 0. Prerequisites
 
 
-
+<table>
+  <tr>
+    <th align="center"> 1 Solution</th>
+    <th align="center"> 2 Solutions</th>
+    <th align="center"> 0 Solution</th>
+  </tr>
+  <tr>
+    <td><img width="500" alt="Image 1" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/444929e6-385f-4bea-a706-377546a32077"></td>
+    <td><img width="500" alt="Image 2" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/27d34962-27b2-4660-ad4c-7f18a73f4a57"></td>
+    <td><img width="454" alt="Image 3" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/60910fa6-a969-480b-b621-f193f07f500a"></td>
+  </tr>
+</table>
 
 
 --------------------------
