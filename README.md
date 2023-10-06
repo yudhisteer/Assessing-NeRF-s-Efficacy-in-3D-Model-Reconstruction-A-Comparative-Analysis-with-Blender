@@ -166,14 +166,94 @@ Note that we can first check if we have any solution at all by plugging in the v
   </tr>
 </table>
 
-We then solve for t and plug the values of the latter into our equation for the ray where we get the x and y values for the point of intersections which are: (-2,12, 2.12) and (2.12, -2.12).
+We then solve for t and plug the values of the latter into our equation for the ray where we get the x and y values for the point of intersections which are: (-2,12, 2.12) and (2.12, -2.12). Now let's implement it in python but for s sphere. Our quadratic formula will change to:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/dbb7704b-9e65-4655-9a54-2be339477ece"/>
+</p>
+
+We start by creating a class for the sphere whereby we will first compute the discriminant and then check if the latter >= 0, then we will color the pixel yellow. Note that previously, we already have created our rays which will originate from (0,0,0) and project downwards the z-axis. Our goal will be similar to that of the circle above, find where the rays intersect and then color the pixel.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/3df8756d-ac8e-498f-8cba-5654d19458e8" width="50%"/>
+</p>
+
+Note that previously, we set the origin as the circle at (0,0), here we will incorporate the center as a variable which can be changed.
+
+```python
+class Sphere ():
+
+    def __init__(self, center, radius, color):
+        self.center = center
+        self.radius = radius
+        self.color = color
+
+    def intersect (self, ray_origin, ray_direction):
+
+        # we want to solve:
+        # (bx^2 + by^2 + bz^2)t^2 + 2(axbx + ayby + azbz)t + (ax^2 + ay^2 + az^2 - r^2) = 0
+        # where:
+        # a = ray origin
+        # b = ray direction
+        # r = circle radius
+        # t = hit distance
+
+        # Center components
+        cx = self.center[0]
+        cy = self.center[1]
+        cz = self.center[2]
+
+        # Ray direction components
+        bx = ray_direction[:, 0] #(160000,)
+        by = ray_direction[:, 1]
+        bz = ray_direction[:, 2]
+
+
+        # Ray origin components
+        ax = ray_origin[:, 0]
+        ay = ray_origin[:, 1]
+        az = ray_origin[:, 2]
+
+        a = bx**2 + by**2 + bz**2
+        b = 2 * (((ax-cx)*bx) + ((ay-cy)*by) + ((az-cz)*bz))
+        c = (ax-cx)**2 + (ay-cy)**2 + (az-cz)**2 - self.radius**2
+
+        # Initialize an array to store colors for each ray.
+        intersection_points = []
+        num_rays = ray_origin.shape[0] #16000
+        colors = np.zeros((num_rays, 3))
+        #intersection_points = np.zeros((num_rays, 3))
+
+        ## Quadratic formula discriminant: b^2 - 4ac
+        discriminant = b**2 - 4 * a * c #(160000,)
+
+        # Iterate through the rays and check for intersection.
+        for i in range(num_rays):
+            if discriminant[i] >= 0:
+                # Calculate the intersection point (quadratic formula)
+                t1 = (-b[i] + np.sqrt(discriminant[i])) / (2 * a[i])
+                t2 = (-b[i] - np.sqrt(discriminant[i])) / (2 * a[i])
+                # Calculate both intersection points (plug in ray equation)
+                intersection_point1 = ray_origin[i] + t1 * ray_direction[i]
+                intersection_point2 = ray_origin[i] + t2 * ray_direction[i]
+
+                # Store both intersection
+                intersection_points.append([intersection_point1, intersection_point2])
+
+                # Assign the sphere's color to rays that intersect the sphere.
+                colors[i] = self.color
+
+        return intersection_points, colors
+```
+Here's the result:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8fc823ee-7deb-4d87-bcec-281331a4591a" width="30%"/>
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f1d1d661-34eb-4155-a9f1-a76b332b7ebd" width="30%">
+</p>
 
 
 
-
-<img width="248" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/099ad108-3448-4a6c-a545-1ea900a71ad1">
-
-<img width="454" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/3df8756d-ac8e-498f-8cba-5654d19458e8">
 
 
 --------------------------
