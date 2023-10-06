@@ -123,14 +123,34 @@ else:
 We start by replacing the x and y components of our ray equation into the equation of the sphere:
 
 <p align="center">
-  <img src=https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/80b77287-c213-46ac-9797-6c09233de40c/>
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/80b77287-c213-46ac-9797-6c09233de40c"/>
 </p>
 
 We now expand the equation and remove t outside the bracket:
 
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/39e69910-3faa-4373-ae98-4b5ed7e9547e"/>
+</p>
 
+In order to solve this quadratic equation, we can use the quadratic formula:
 
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/01d96934-b062-4797-a5ca-2f0abcdb70cc"/>
+</p>
 
+with the discriminant being: 
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/309a646d-c9ed-4c7b-97bc-4786a0e9fed6"/>
+</p>
+
+where:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/07562b4e-924f-4110-9b21-2c93b54052e0"/>
+</p>
+
+Note that we can first check if we have any solution at all by plugging in the values into the discriminant. Normally, if the discriminant = 0, then we have one solution such that the line is tangent to the circle, if the discriminant > 0, then we have 2 solutions with the line intersecting the circle at two distinct positions and finally, if the discriminant < 0, then we have 0 solutions, with the line not intersecting the circle at all. Below is a graphical representation of it:
 
 
 <table>
@@ -146,18 +166,10 @@ We now expand the equation and remove t outside the bracket:
   </tr>
 </table>
 
+We then solve for t and plug the values of the latter into our equation for the ray where we get the x and y values for the point of intersections which are: (-2,12, 2.12) and (2.12, -2.12).
 
 
 
-
-```python
-if discriminant < 0:
-      result = no solution
-elif discriminant = 0:
-      result = 1 solution
-else:
-      result = 2 solution
-```
 
 <img width="248" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/099ad108-3448-4a6c-a545-1ea900a71ad1">
 
