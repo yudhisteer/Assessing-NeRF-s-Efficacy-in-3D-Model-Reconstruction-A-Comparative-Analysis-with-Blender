@@ -93,7 +93,13 @@ We will first work on the mathematical calculations of how we can model a circle
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/47eff1bc-4cd9-4ded-aa9a-7fbd8ac387f6"/>
 </p>
 
-Below is the equation of a sphere where a and b are the center and r is the radius. Suppose we have a sphere centered at the origin with radius 3. We also have a ray with an origin (-4,4) with a direction vector of (-1,-1), we want to know if that ray will intersect with the circle, and if so, where? 
+Below is the equation of a circle where a and b are the center and r is the radius. 
+
+<p align="center">
+  <img src=https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8985882e-d998-4d8f-b8b6-35059854216b/>
+</p>
+
+Suppose we have a circle centered at the origin with radius 3. We also have a ray with an origin (-4,4) with a direction vector of (-1,-1), we want to know if that ray will intersect with the circle, and if so, where? 
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/bb614489-0db0-4e83-be8c-df8fae709e22" width="40%"/>
@@ -105,9 +111,7 @@ Below is the equation of a sphere where a and b are the center and r is the radi
 
 Our logic will be as follows:
 
-<p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8858504f-7412-45f2-8c03-0b35ba968b58"/>
-</p>
+
 
 ```python
 if intersection:
