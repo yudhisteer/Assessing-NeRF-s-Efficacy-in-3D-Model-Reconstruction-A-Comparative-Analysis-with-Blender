@@ -218,7 +218,7 @@ class Sphere ():
         b = 2 * (((ax-cx)*bx) + ((ay-cy)*by) + ((az-cz)*bz))
         c = (ax-cx)**2 + (ay-cy)**2 + (az-cz)**2 - self.radius**2
 
-        # Initialize an array to store colors for each ray.
+        # Store colors for each ray.
         intersection_points = []
         num_rays = ray_origin.shape[0] #16000
         colors = np.zeros((num_rays, 3))
