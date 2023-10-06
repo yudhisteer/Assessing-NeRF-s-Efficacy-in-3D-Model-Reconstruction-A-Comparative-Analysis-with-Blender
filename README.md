@@ -52,6 +52,55 @@ Into the 3D Scene: These rays extend into the 3D scene, essentially probing the 
 
 
 ### 0.4 NeRFing a sphere
+In this section, we will apply ray-casting techniques in order to create a sphere. We start by defining the difference between a **line** and a **ray**. while a line is an infinite straight path extending in **both directions**, a ray has an **origin** and a **direction vector** that extends infinitely in **one** direction. The equation of a ray can be modeled as a parametric equation:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/56095af0-764d-431b-8361-3d46a55947de"/>
+</p>
+
+where ```o``` is the **origin**, ```d``` is the **direction vector**, ```t``` is a **parameter** that varies along the ray and determines different points along its path, and ```r``` is a **position vector** representing any point on the ray.
+
+Let's look at an example of how we can apply this equation. Suppose we have the origin of a vector at (2,3) with a direction vector of (1,1). We want to know the position vector of that ray when t=5. Using the equation above:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f8ad3b8d-3755-4600-9268-25f025f2c244"/>
+</p>
+
+Note that (7,8) is the horizontal and vertical displacement in the x and y directions. That is we have moved 7.07 units along the ray, using Pythagoras theorem, from point A to point C and not 5 units as specified by t. If we want to move 5 units along that ray, then we need to normalize our direction vector into a unit vector. 
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6a0529b3-5c7b-4366-9b91-84d0358605af"/>
+</p>
+
+We then re-calculate our position vector which is now (5.5, 6.5). If we check again with Pythagoras theorem, then we have indeed moved 5 units along that ray.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/e477a759-6aa6-4a40-8505-8a297c87557b"/>
+</p>
+
+<table>
+  <tr>
+    <td><img width="379" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f2e93073-92bd-46bd-87b7-a58c38e33290"></td>
+    <td><img width="358" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/83a9ce1d-1618-4ced-a1d8-785e94bdf0f3"></td>
+    <td><img width="360" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f5ba7de3-a43a-40b3-91f6-4572d8b872db"></td>
+  </tr>
+</table>
+
+
+We will first work on the mathematical calculations of how we can model a circle. Since it is easier to work in 2D, when modeling for a 3D sphere we will just need to add a ```z``` component. We will change our equation of a ray with different variables to avoid any notation confusion in the future. Note that I also separated it into their ```x-y``` components:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/47eff1bc-4cd9-4ded-aa9a-7fbd8ac387f6"/>
+</p>
+
+
+
+
+
+
+
+
+
 
 <table>
   <tr>
