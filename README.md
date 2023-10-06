@@ -7,13 +7,15 @@
       - Ray Tracing
       - Ray Casting
       - Ray Marching
-      - NeRFing a sphere
+      - NeRFing a sphere: Part I
 
 1. Understanding NeRF
      - Volumetric Scene Representation
      - Volume Rendering
+     - NeRFing a sphere: Part II
      - Improvement 1: Positional Encoding
      - Improvement 2: Hierarchical Volume Sampling
+     - NeRFing a sphere: Part II
 
 2. 3D Model using Blender
 
