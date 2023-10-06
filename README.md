@@ -68,6 +68,7 @@ Into the 3D Scene: These rays extend into the 3D scene, essentially probing the 
 
 <img width="248" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/099ad108-3448-4a6c-a545-1ea900a71ad1">
 
+<img width="454" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/3df8756d-ac8e-498f-8cba-5654d19458e8">
 
 
 --------------------------
