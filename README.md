@@ -30,8 +30,6 @@
 Ray tracing works by calculating how light interacts with objects in a 3D scene. It's like simulating the path of a beam of light as it bounces off surfaces, refracts through materials, and creates shadows. This technique meticulously tracks rays of light from the viewer's eye through each pixel on the screen, considering complex interactions such as reflections and refractions. This results in highly detailed and photorealistic images, making it ideal for movie special effects and rendering realistic scenes in high-end games.
 
 
-
-
 <div style="text-align: center;">
   <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/deffeb2e-5ce7-4640-915c-ac198e887afd" controls="controls" style="max-width: 730px;">
   </video>
@@ -40,21 +38,32 @@ Ray tracing works by calculating how light interacts with objects in a 3D scene.
     <p>Video source: <a href="https://www.youtube.com/watch?v=NRmkr50mkEE&t=530s&ab_channel=TwoMinutePapers">Ray Tracing: How NVIDIA Solved the Impossible!</a></p>
 </div>
 
-
-
 ### 0.2 Ray Casting
 Ray casting is more straightforward. Imagine you're taking a photo with a camera. For each pixel on the screen, a single ray is sent out from your eye, and it checks if it hits anything in the scene. This technique is quick because it doesn't consider complex lighting effects like reflections or global illumination. It's suitable for real-time applications where speed is essential, such as early video games and simple simulations.
-
-
 
 <div style="text-align: center;">
   <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8bfce500-6c63-47ff-8fe3-ed082298fb02" controls="controls" style="max-width: 730px;">
   </video>
 </div>
-
+<div align="center">
+    <p>Video source: <a href="https://www.youtube.com/watch?v=5xyeWBxmqzc&list=PLlYT7ZZOcBNA1hVBjkKFMnW0YDDODdy40&ab_channel=FinFET">How to make a simple 3D* game in Python from scratch - Ray casting</a></p>
+</div>
 
 
 ### 0.3 Ray Marching
+Ray marching is like exploring a scene step by step. It sends out a ray and takes small steps along it, checking for objects or changes in the scene. This is useful for creating unusual and mathematical shapes or for rendering things like clouds or fractals where the structure is complex and not always easy to calculate all at once.
+
+
+
+
+<div style="text-align: center;">
+  <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/a2ee6682-de6d-4d76-a3b5-b72b108733d9" controls="controls" style="max-width: 730px;">
+  </video>
+</div>
+<div align="center">
+    <p>Video source: <a href="https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux">2D Ray Marching Visualization : Python</a></p>
+</div>
+
 
 
 Instead of directly calculating intersections and shading like traditional ray casting, NeRF uses a **neural network** to learn the 3D representation of the scene. The neural network takes the ```rays'``` **directions** and **origins** as **input** and **predicts** the ```3D scene's appearance (R,G,B)``` and ```structure (Density)``` at those points.
@@ -414,6 +423,9 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 ## 3. Training NeRF
 
 
+Signed distance functions, or SDFs for short, when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside (hence signed distance function). Let’s look at an example.
+
+Consider a sphere centered at the origin. Points inside the sphere will have a distance from the origin less than the radius, points on the sphere will have distance equal to the radius, and points outside the sphere will have distances greater than the radius.
 
 --------------------------
 
@@ -438,3 +450,5 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 13. https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.
 14. https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#
 15. https://dtransposed.github.io/blog/2022/08/06/NeRF/
+16. https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux
+17. https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/
