@@ -48,11 +48,13 @@ Pixel in a 2D Image: Consider a 2D image, like a photograph or a frame from a vi
 
 Casts Rays: NeRF virtually casts rays from the camera's viewpoint through each pixel in the 2D image. Each ray represents a line in 3D space, originating at the camera's position and passing through a specific pixel's location on the image.
 
-Into the 3D Scene: These rays extend into the 3D scene, essentially probing the scene's geometry and appearance. The purpose of casting rays from each pixel is to collect information about how light interacts with the scene, which helps NeRF build a 3D representation of the scene. The algorithm uses this information to reconstruct the 3D scene's geometry and appearance. By gathering data from multiple rays cast from different pixels in the image, NeRF can create a more accurate and detailed 3D model.  the phrase "casts rays into the 3D scene" means that NeRF sends out virtual rays from the camera's viewpoint through each pixel in the 2D image to understand and model the 3D scene.
+Into the 3D Scene: These rays extend into the 3D scene, essentially probing the scene's geometry and appearance. The purpose of casting rays from each pixel is to collect information about how light interacts with the scene, which helps NeRF build a 3D representation of the scene. The algorithm uses this information to reconstruct the 3D scene's geometry and appearance. By gathering data from multiple rays cast from different pixels in the image, NeRF can create a more accurate and detailed 3D model.  The phrase "casts rays into the 3D scene" means that NeRF sends out virtual rays from the camera's viewpoint through each pixel in the 2D image to understand and model the 3D scene.
 
 
-### 0.4 NeRFing a sphere
-In this section, we will apply ray-casting techniques in order to create a sphere. We start by defining the difference between a **line** and a **ray**. while a line is an infinite straight path extending in **both directions**, a ray has an **origin** and a **direction vector** that extends infinitely in **one** direction. The equation of a ray can be modeled as a parametric equation:
+### 0.4 NeRFing a sphere - Part I
+Before diving deep into NeRFing a ```3D``` model, I want to take the simplest example: **a sphere**. We will first try to apply the principles as shown in the NeRF paper to 3D model a sphere. In this section, we will apply **ray-casting** techniques in order to create a sphere then we will improve it in the following sections.
+
+We start by defining the difference between a **line** and a **ray**. while a line is an infinite straight path extending in **both directions**, a ray has an **origin** and a **direction vector** that extends infinitely in **one** direction. The equation of a ray can be modeled as a **parametric equation**:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/56095af0-764d-431b-8361-3d46a55947de"/>
@@ -60,19 +62,19 @@ In this section, we will apply ray-casting techniques in order to create a spher
 
 where ```o``` is the **origin**, ```d``` is the **direction vector**, ```t``` is a **parameter** that varies along the ray and determines different points along its path, and ```r``` is a **position vector** representing any point on the ray.
 
-Let's look at an example of how we can apply this equation. Suppose we have the origin of a vector at (2,3) with a direction vector of (1,1). We want to know the position vector of that ray when t=5. Using the equation above:
+Let's look at an example of how we can apply this equation. Suppose we have the origin of a vector at ```(2,3)``` with a direction vector of ```(1,1)```. We want to know the position vector of that ray when ```t=5```. Using the equation above:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f8ad3b8d-3755-4600-9268-25f025f2c244"/>
 </p>
 
-Note that (7,8) is the horizontal and vertical displacement in the x and y directions. That is we have moved 7.07 units along the ray, using Pythagoras theorem, from point A to point C and not 5 units as specified by t. If we want to move 5 units along that ray, then we need to normalize our direction vector into a unit vector. 
+Note that ```(7,8)``` is the horizontal and vertical displacement in the ```x``` and ```y``` directions. That is we have moved ```7.07``` units along the ray, using Pythagoras theorem, from point ```A``` to point ```C``` and not ```5 units``` as specified by ```t```. If we want to move ```5 units``` along that ray, then we need to **normalize** our ```direction vector``` into a **unit vector**. 
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6a0529b3-5c7b-4366-9b91-84d0358605af"/>
 </p>
 
-We then re-calculate our position vector which is now (5.5, 6.5). If we check again with Pythagoras theorem, then we have indeed moved 5 units along that ray.
+We then re-calculate our position vector which is now ```(5.5, 6.5)```. If we check again with **Pythagoras theorem**, then we have indeed moved ```5 units``` along that ray.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/e477a759-6aa6-4a40-8505-8a297c87557b"/>
@@ -87,7 +89,7 @@ We then re-calculate our position vector which is now (5.5, 6.5). If we check ag
 </table>
 
 
-We will first work on the mathematical calculations of how we can model a circle. Since it is easier to work in 2D, when modeling for a 3D sphere we will just need to add a ```z``` component. We will change our equation of a ray with different variables to avoid any notation confusion in the future. Note that I also separated it into their ```x-y``` components:
+We will first work on the mathematical calculations of how we can model a circle. Since it is easier to work in ```2D```, when modeling for a ```3D``` sphere we will just need to add a ```z``` component. We will change our equation of a ray with different variables to avoid any notation confusion in the future. Note that I also separated it into their ```x-y``` components:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/47eff1bc-4cd9-4ded-aa9a-7fbd8ac387f6"/>
@@ -99,19 +101,13 @@ Below is the equation of a circle where a and b are the center and r is the radi
   <img src=https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8985882e-d998-4d8f-b8b6-35059854216b/>
 </p>
 
-Suppose we have a circle centered at the origin with radius 3. We also have a ray with an origin (-4,4) with a direction vector of (-1,-1), we want to know if that ray will intersect with the circle, and if so, where? 
+Suppose we have a circle centered at the origin with radius ```3```. We also have a ray with an origin ```(-4,4)``` with a direction vector of ```(-1,-1)```, we want to know if that ray will **intersect** with the circle, and if so, **where**? 
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/bb614489-0db0-4e83-be8c-df8fae709e22" width="40%"/>
 </p>
 
-
-
-
-
 Our logic will be as follows:
-
-
 
 ```python
 if intersection:
@@ -120,25 +116,25 @@ else:
       pixel_color = "black" #background color
 ```
 
-We start by replacing the x and y components of our ray equation into the equation of the sphere:
+We start by replacing the ```x``` and ```y``` components of our ray equation into the equation of the sphere:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/80b77287-c213-46ac-9797-6c09233de40c"/>
 </p>
 
-We now expand the equation and remove t outside the bracket:
+We now expand the equation and remove ```t``` outside the bracket:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/39e69910-3faa-4373-ae98-4b5ed7e9547e"/>
 </p>
 
-In order to solve this quadratic equation, we can use the quadratic formula:
+In order to solve this quadratic equation, we can use the **quadratic formula**:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/01d96934-b062-4797-a5ca-2f0abcdb70cc"/>
 </p>
 
-with the discriminant being: 
+with the **discriminant** being: 
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/309a646d-c9ed-4c7b-97bc-4786a0e9fed6"/>
@@ -150,7 +146,7 @@ where:
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/07562b4e-924f-4110-9b21-2c93b54052e0"/>
 </p>
 
-Note that we can first check if we have any solution at all by plugging in the values into the discriminant. Normally, if the discriminant = 0, then we have one solution such that the line is tangent to the circle, if the discriminant > 0, then we have 2 solutions with the line intersecting the circle at two distinct positions and finally, if the discriminant < 0, then we have 0 solutions, with the line not intersecting the circle at all. Below is a graphical representation of it:
+Note that we can first check if we have any solution at all by plugging in the values into the **discriminant**. Normally, if the ```discriminant = 0```, then we have **one solution** such that the line is **tangent** to the circle, if the ```discriminant > 0```, then we have **2 solutions** with the line intersecting the circle at **two distinct points** and finally, if the ```discriminant < 0```, then we have **0 solutions**, with the line **not intersecting** the circle at all. Below is a graphical representation of it:
 
 
 <table>
@@ -166,19 +162,19 @@ Note that we can first check if we have any solution at all by plugging in the v
   </tr>
 </table>
 
-We then solve for t and plug the values of the latter into our equation for the ray where we get the x and y values for the point of intersections which are: (-2,12, 2.12) and (2.12, -2.12). Now let's implement it in python but for s sphere. Our quadratic formula will change to:
+We then solve for ```t``` and plug the values of the latter into our equation for the ray where we get the ```x``` and ```y``` values for the point of intersections which are: ```(-2,12, 2.12)``` and ```(2.12, -2.12)```. Now let's implement it in Python but for a **sphere**. Our quadratic formula will change to:
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/dbb7704b-9e65-4655-9a54-2be339477ece"/>
 </p>
 
-We start by creating a class for the sphere whereby we will first compute the discriminant and then check if the latter >= 0, then we will color the pixel yellow. Note that previously, we already have created our rays which will originate from (0,0,0) and project downwards the z-axis. Our goal will be similar to that of the circle above, find where the rays intersect and then color the pixel.
+We start by creating a **class** for the sphere whereby we will first compute the discriminant and then check if the latter ```>= 0```, then we will color the pixel ```red```. Note that previously, we already have created our rays which will originate from ```(0,0,0)``` and project downwards the ```z-axis```. Our goal will be similar to that of the circle above, find where the rays intersect and then color the pixel.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/3df8756d-ac8e-498f-8cba-5654d19458e8" width="50%"/>
 </p>
 
-Note that previously, we set the origin as the circle at (0,0), here we will incorporate the center as a variable which can be changed.
+Note that previously, we set the origin as the circle at ```(0,0)```, here we will incorporate the center as a **variable** ```(cx, cy, cz)``` which can be changed.
 
 ```python
 class Sphere ():
@@ -245,14 +241,14 @@ class Sphere ():
 
         return intersection_points, colors
 ```
-Here's the result:
+Here's the result. When viewed on a ```2D``` plane, it appears to be a **circle** but with Plotly in ```3D``` we indeed confirm we have created a **sphere**.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8fc823ee-7deb-4d87-bcec-281331a4591a" width="45%"/>
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/f1d1d661-34eb-4155-a9f1-a76b332b7ebd" width="45%">
 </p>
 
-
+Let's explore the NeRF paper first before improving our sphere further.
 
 
 
