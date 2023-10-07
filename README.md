@@ -27,28 +27,28 @@
 
 ### 0.1 Ray Tracing
 
+Ray tracing works by calculating how light interacts with objects in a 3D scene. It's like simulating the path of a beam of light as it bounces off surfaces, refracts through materials, and creates shadows. This technique meticulously tracks rays of light from the viewer's eye through each pixel on the screen, considering complex interactions such as reflections and refractions. This results in highly detailed and photorealistic images, making it ideal for movie special effects and rendering realistic scenes in high-end games.
+
+
+
+
+<div style="text-align: center;">
+  <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/bc94abc0-1188-44c5-9636-cf3bd20aed07" controls="controls" style="max-width: 730px;">
+  </video>
+</div>
+<div align="center">
+    <p>Image Source: <a href="https://www.youtube.com/watch?v=NRmkr50mkEE&t=530s&ab_channel=TwoMinutePapers">Ray Tracing: How NVIDIA Solved the Impossible!</a></p>
+</div>
+
+
 
 ### 0.2 Ray Casting
 
 ### 0.3 Ray Marching
 
-NeRF (Neural Radiance Fields) uses a concept similar to ray casting but differs in some key aspects. Here's how NeRF works:
 
-Input: NeRF takes 2D images captured from various viewpoints as its input. These images provide information about how the 3D scene appears from different angles.
+Instead of directly calculating intersections and shading like traditional ray casting, NeRF uses a **neural network** to learn the 3D representation of the scene. The neural network takes the ```rays'``` **directions** and **origins** as **input** and **predicts** the ```3D scene's appearance (R,G,B)``` and ```structure (Density)``` at those points.
 
-Ray Casting: NeRF performs a form of ray casting internally. For each pixel in a 2D image, it casts rays into the 3D scene, originating from the camera's viewpoint and passing through that pixel's location on the image.
-
-Neural Network: Instead of directly calculating intersections and shading like traditional ray casting, NeRF uses a neural network to learn the 3D representation of the scene. The neural network takes the rays' directions and origins as input and predicts the 3D scene's appearance and structure at those points.
-
-Scene Reconstruction: NeRF leverages the predictions of the neural network to reconstruct the 3D scene. It learns the scene's geometry (shape) and appearance (color and texture) by training on the set of images.
-
-So, while NeRF does involve a form of ray casting where rays are cast from the camera into the scene, it differs from traditional ray casting in that it relies on a neural network to learn and reconstruct the 3D scene's properties. It's more closely related to neural networks and 3D scene representation rather than the classic ray tracing or simple ray casting techniques used for rendering or visibility testing.
-
-Pixel in a 2D Image: Consider a 2D image, like a photograph or a frame from a video. Each pixel in this image corresponds to a point in the 3D space (the scene you're trying to model).
-
-Casts Rays: NeRF virtually casts rays from the camera's viewpoint through each pixel in the 2D image. Each ray represents a line in 3D space, originating at the camera's position and passing through a specific pixel's location on the image.
-
-Into the 3D Scene: These rays extend into the 3D scene, essentially probing the scene's geometry and appearance. The purpose of casting rays from each pixel is to collect information about how light interacts with the scene, which helps NeRF build a 3D representation of the scene. The algorithm uses this information to reconstruct the 3D scene's geometry and appearance. By gathering data from multiple rays cast from different pixels in the image, NeRF can create a more accurate and detailed 3D model.  The phrase "casts rays into the 3D scene" means that NeRF sends out virtual rays from the camera's viewpoint through each pixel in the 2D image to understand and model the 3D scene.
 
 
 ### 0.4 NeRFing a sphere - Part I
