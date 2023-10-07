@@ -445,6 +445,7 @@ class Sphere ():
 ```
 
 
+<img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234">
 
 
 
