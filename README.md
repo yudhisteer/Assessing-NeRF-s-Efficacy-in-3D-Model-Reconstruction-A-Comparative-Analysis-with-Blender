@@ -43,6 +43,16 @@ Ray tracing works by calculating how light interacts with objects in a 3D scene.
 
 
 ### 0.2 Ray Casting
+Ray casting is more straightforward. Imagine you're taking a photo with a camera. For each pixel on the screen, a single ray is sent out from your eye, and it checks if it hits anything in the scene. This technique is quick because it doesn't consider complex lighting effects like reflections or global illumination. It's suitable for real-time applications where speed is essential, such as early video games and simple simulations.
+
+
+
+<div style="text-align: center;">
+  <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8bfce500-6c63-47ff-8fe3-ed082298fb02" controls="controls" style="max-width: 730px;">
+  </video>
+</div>
+
+
 
 ### 0.3 Ray Marching
 
