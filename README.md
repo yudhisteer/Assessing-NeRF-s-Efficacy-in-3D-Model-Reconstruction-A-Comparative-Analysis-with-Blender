@@ -33,11 +33,11 @@ Ray tracing works by calculating how light interacts with objects in a 3D scene.
 
 
 <div style="text-align: center;">
-  <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/bc94abc0-1188-44c5-9636-cf3bd20aed07" controls="controls" style="max-width: 730px;">
+  <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/deffeb2e-5ce7-4640-915c-ac198e887afd" controls="controls" style="max-width: 730px;">
   </video>
 </div>
 <div align="center">
-    <p>Image Source: <a href="https://www.youtube.com/watch?v=NRmkr50mkEE&t=530s&ab_channel=TwoMinutePapers">Ray Tracing: How NVIDIA Solved the Impossible!</a></p>
+    <p>Video source: <a href="https://www.youtube.com/watch?v=NRmkr50mkEE&t=530s&ab_channel=TwoMinutePapers">Ray Tracing: How NVIDIA Solved the Impossible!</a></p>
 </div>
 
 
