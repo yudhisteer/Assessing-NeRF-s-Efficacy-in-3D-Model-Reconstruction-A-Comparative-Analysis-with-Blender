@@ -401,6 +401,50 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 
 
 
+### 1.3 NeRFing a sphere: Part II
+Signed distance functions, SDFs,  when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside. For our case, points inside the sphere will have a ```distance from the origin < the radius```, points on the sphere will have ```distances = equal to the radius```, and points outside the sphere will have ```distances > than the radius```.
+
+In our implementation, we will not pass the ray origin and direction vector as input but instead a point in 3D space. We will then check for the condition if the point is less than the radius:
+
+```python
+class Sphere ():
+
+    def __init__(self, center, radius, color):
+        self.center = center
+        self.radius = radius
+        self.color = color
+
+    def intersect (self, point, ray_origin):
+
+        # Center components
+        cx = self.center[0]
+        cy = self.center[1]
+        cz = self.center[2]
+
+        # separtate point into x-y-z components
+        x_coor = point[:, 0]
+        y_coor = point[:, 1]
+        z_coor = point[:, 2]
+
+        # any point less than radius^2 are in the sphere
+        # x^2 + y^2 + z^2 < r^2
+        condition = (x_coor-cx)**2 + (y_coor-cy)**2 + (z_coor-cz)**2 < self.radius**2
+
+        # store colors and density for each ray.
+        num_rays = ray_origin.shape[0] #16000
+        colors = np.zeros((num_rays, 3))
+        density = np.zeros((num_rays, 1))
+
+        # Iterate over each ray and check the condition
+        for i in range(num_rays):
+            if condition: # if condition = true
+                colors[i] = self.color
+                density[i] = 10
+
+        return colors, density
+```
+
+
 
 
 
@@ -423,9 +467,7 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 ## 3. Training NeRF
 
 
-Signed distance functions, or SDFs for short, when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside (hence signed distance function). Let’s look at an example.
 
-Consider a sphere centered at the origin. Points inside the sphere will have a distance from the origin less than the radius, points on the sphere will have distance equal to the radius, and points outside the sphere will have distances greater than the radius.
 
 --------------------------
 
