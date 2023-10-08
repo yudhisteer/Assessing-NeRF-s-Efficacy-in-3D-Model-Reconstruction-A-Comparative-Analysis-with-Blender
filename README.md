@@ -404,6 +404,16 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 ### 1.3 NeRFing a sphere: Part II
 Signed distance functions, SDFs,  when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside. For our case, points inside the sphere will have a ```distance from the origin < the radius```, points on the sphere will have ```distances = equal to the radius```, and points outside the sphere will have ```distances > than the radius```.
 
+
+
+![CodeCogsEqn (35)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2fe30b96-881b-4eec-9ea3-d832ffd6768b)
+
+
+![CodeCogsEqn (33)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/35579906-0d9d-4c96-ae8c-354c019b1071)
+
+
+
+
 In our implementation, we will not pass the ray origin and direction vector as input but instead a point in 3D space. We will then check for the condition if the point is less than the radius:
 
 ```python
@@ -453,6 +463,8 @@ class Sphere ():
   <tr>
     <td><img width="446" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/9dbed1ff-9780-4945-92e5-50aa5d06f0d8"></td>
     <td><img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234"></td>
+    <td><img width="754" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/177e20a2-57f4-4773-bf23-acc600c66042"></td>
+
   </tr>
 </table>
 
