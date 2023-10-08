@@ -404,17 +404,7 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 ### 1.3 NeRFing a sphere: Part II
 Signed distance functions, SDFs,  when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside. For our case, points inside the sphere will have a ```distance from the origin < the radius```, points on the sphere will have ```distances = equal to the radius```, and points outside the sphere will have ```distances > than the radius```.
 
-
-
-![CodeCogsEqn (35)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2fe30b96-881b-4eec-9ea3-d832ffd6768b)
-
-
-![CodeCogsEqn (33)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/35579906-0d9d-4c96-ae8c-354c019b1071)
-
-
-
-
-In our implementation, we will not pass the ray origin and direction vector as input but instead a point in 3D space. We will then check for the condition if the point is less than the radius:
+We will change our class sphere such that this time we won't compute for intersections of rays with the sphere, but instead sample points along the rays and check if the point is less than the radius. If so, we will assign a color to that point and a density value.
 
 ```python
 class Sphere ():
@@ -459,40 +449,49 @@ class Sphere ():
         return colors, density
 ```
 
-<table>
-  <tr>
-    <td><img width="446" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/9dbed1ff-9780-4945-92e5-50aa5d06f0d8"></td>
-    <td><img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234"></td>
-    <td><img width="754" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/177e20a2-57f4-4773-bf23-acc600c66042"></td>
+Next, the author talks about using a stratified sampling approach whereby they partition ```[tn, tf]``` into **N evenly-spaced bins** and we also need to calculate the distance between the adjacent samples which is equal to **delta**. We implement it as follows:
 
-  </tr>
-</table>
-
-
-
-
-
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2fe30b96-881b-4eec-9ea3-d832ffd6768b" />
+</p>
 
 ```python
-    model = Sphere(center, radius, color)
-    b, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+    # divide our ray at equally spaced intervals
+    t = torch.linspace(tn, tf, bins).to(device)
 
-    # optimization on color
-    color_to_optimize = torch.tensor([0., 1., 0.], requires_grad=True) #green
-    print("Color before optimization: ", color_to_optimize)
+    # calculate delta: t_i+1 - t_i ## distance between adjacent samples
+    delta = torch.cat((t[1:] - t[:-1], torch.tensor([1e10], device=device))) #for the last delta value we set to infinity (1e10)
+```
+We define our equation of ray:
 
-    optimizer = torch.optim.SGD({color_to_optimize}, lr=1e-1)
-    training_loss = []
-    for epoch in range(10):
-        model = Sphere(center, radius, color=color_to_optimize)
-        Ax, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
-        loss = ((Ax - b) ** 2).mean()
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+```python
+    # Equation of rays
+    ray = ray_origin + t * ray_direction
 ```
 
-<img width="1194" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/c9cf0923-610f-4948-ac20-a39ad80d2855">
+We calculate the RGB color and density at that sampled point:
+
+```python
+    # calculate colors, and density at the sampled point
+    colors, density = model.intersect(ray_reshape)
+```
+
+We compute alpha as follows:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/907fab98-3779-4b2b-b012-ce9e27044851" />
+</p>
+
+```python
+    # compute alpha
+    alpha = 1 - torch.exp(- torch.from_numpy(density) * delta.unsqueeze(0))
+```
+
+Next, we compute the accumulated transmittance using the equation below:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/35579906-0d9d-4c96-ae8c-354c019b1071" width="60%" />
+</p>
 
 ```python
 def accumulated_transmittance(alpha):
@@ -504,8 +503,69 @@ def accumulated_transmittance(alpha):
     T[:, 0] = 1
     return T
 
+# compute accumulated transmittance
+T = accumulated_transmittance(alpha) #([160000, 100])
+```
+Finally, we compute the expected color using the equation below:
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/6eec67d0-3eb1-4b24-bbd5-73b575671d6e" width="25%" />
+</p>
+
+```python
+    # computer expected color
+    expected_color = (T.unsqueeze(-1) * alpha.unsqueeze(-1) * torch.from_numpy(colors)).sum(1) #sum along bins
 ```
 
+From the image below, we observe that the first sphere was from the first iteration which shows no rendering. The second sphere is a rendered one which we just did. Notice how it gives a more 3D realistic rendering of the object. one important thing to note here is that our sphere is no longer hollow. That is, we can see we have points inside the sphere as shown in the last diagram. It seems we have layers of circles with reducing radii that form the sphere, as we go towards the top. This is due to the N evenly-spaced sampled points from our rays.
+
+<table>
+  <tr>
+    <td><img width="446" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/9dbed1ff-9780-4945-92e5-50aa5d06f0d8"></td>
+    <td><img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234"></td>
+    <td><img width="754" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/177e20a2-57f4-4773-bf23-acc600c66042"></td>
+
+  </tr>
+</table>
+
+
+The author argues that the function to calculate the expected color is **differentiable**. Hence, we will test this by first creating a **ground truth** sphere of color ```red```.
+
+```python
+    # parameters for sphere
+    center = np.array([0., 0., -2.])
+    radius = 0.1
+    color = np.array([1., 0., 0.]) #red
+
+    model = Sphere(center, radius, color)
+    b = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+```
+
+We will then initialize a second color that will need to be **optimized**. We will set it to ```green``` with the parameter ```requires_grad=True```.
+
+```python
+    # Optimization on color
+    color_to_optimize = torch.tensor([0., 1., 0.], requires_grad=True) #green
+```
+
+We then set our optimizer to **Stochastic Gradient Descent (SGD)**, calculate the **loss** between the _ground truth_ and our _predicted value_, and do **backpropagation** to update the color. 
+
+```python
+    optimizer = torch.optim.SGD({color_to_optimize}, lr=1e-1)
+    training_loss = []
+    for epoch in range(200):
+        model = Sphere(center, radius, color=color_to_optimize)
+        Ax, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+        loss = ((Ax - b) ** 2).mean()
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+```
+We train for ```200``` epochs and plot the resulting image after each ```10``` epochs. Below is the result
+
+<img width="1194" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/c9cf0923-610f-4948-ac20-a39ad80d2855">
+
+Notice how we started with a green sphere and after each ```10```iteration, we can see the changes from **green** to **red**. By iteration ```120``` we have a fully red sphere.
 
 
 
