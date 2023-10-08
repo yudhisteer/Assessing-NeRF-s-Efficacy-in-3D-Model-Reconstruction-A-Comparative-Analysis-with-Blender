@@ -260,7 +260,7 @@ class Sphere ():
 
         return intersection_points, colors
 ```
-Here's the result. When viewed on a ```2D``` plane, it appears to be a **circle** but with Plotly in ```3D``` we indeed confirm we have created a **sphere**.
+Here's the result. When viewed on a ```2D``` plane, it appears to be a **circle** but with Plotly in ```3D``` we indeed confirm we have created a **sphere**. Also, notice that our sphere is **hollow**. That is, we have only points on the surface of the sphere and none on the inside. This makes sense as we are only taking into account the point of intersections of the ray and the sphere. In the next iteration, we will change this to have a **solid sphere** and assign density to the points inside.
 
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8fc823ee-7deb-4d87-bcec-281331a4591a" width="45%"/>
