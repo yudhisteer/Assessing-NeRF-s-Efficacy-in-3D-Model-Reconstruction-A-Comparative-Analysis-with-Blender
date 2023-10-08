@@ -452,6 +452,25 @@ class Sphere ():
 
 <img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234">
 
+```python
+    model = Sphere(center, radius, color)
+    b, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+
+    # optimization on color
+    color_to_optimize = torch.tensor([0., 1., 0.], requires_grad=True) #green
+    print("Color before optimization: ", color_to_optimize)
+
+    optimizer = torch.optim.SGD({color_to_optimize}, lr=1e-1)
+    training_loss = []
+    for epoch in range(10):
+        model = Sphere(center, radius, color=color_to_optimize)
+        Ax, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+        loss = ((Ax - b) ** 2).mean()
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+```
+
 <img width="1194" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/c9cf0923-610f-4948-ac20-a39ad80d2855">
 
 ```python
@@ -465,6 +484,10 @@ def accumulated_transmittance(alpha):
     return T
 
 ```
+
+
+
+
 
 ### 1.3 Improvement 1: Positional Encoding
 
