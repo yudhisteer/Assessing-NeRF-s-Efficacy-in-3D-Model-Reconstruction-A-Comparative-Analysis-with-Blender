@@ -490,7 +490,7 @@ We compute alpha as follows:
 Next, we compute the accumulated transmittance using the equation below:
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/35579906-0d9d-4c96-ae8c-354c019b1071" width="60%" />
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/35579906-0d9d-4c96-ae8c-354c019b1071" />
 </p>
 
 ```python
@@ -544,7 +544,7 @@ The author argues that the function to calculate the expected color is **differe
 We will then initialize a second color that will need to be **optimized**. We will set it to ```green``` with the parameter ```requires_grad=True```.
 
 ```python
-    # Optimization on color
+    # Optimization of color
     color_to_optimize = torch.tensor([0., 1., 0.], requires_grad=True) #green
 ```
 
@@ -555,7 +555,7 @@ We then set our optimizer to **Stochastic Gradient Descent (SGD)**, calculate th
     training_loss = []
     for epoch in range(200):
         model = Sphere(center, radius, color=color_to_optimize)
-        Ax, _, _ = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+        Ax = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
         loss = ((Ax - b) ** 2).mean()
         optimizer.zero_grad()
         loss.backward()
