@@ -414,7 +414,12 @@ class Sphere ():
         self.radius = radius
         self.color = color
 
-    def intersect (self, point, ray_origin):
+    def intersect(self, point):
+
+        '''
+        :param point: [batch_size, 3]. It is the sampled point along a ray
+        :return: color, density
+        '''
 
         # Center components
         cx = self.center[0]
@@ -431,13 +436,13 @@ class Sphere ():
         condition = (x_coor-cx)**2 + (y_coor-cy)**2 + (z_coor-cz)**2 < self.radius**2
 
         # store colors and density for each ray.
-        num_rays = ray_origin.shape[0] #16000
+        num_rays = point.shape[0] #16000
         colors = np.zeros((num_rays, 3))
         density = np.zeros((num_rays, 1))
 
         # Iterate over each ray and check the condition
         for i in range(num_rays):
-            if condition: # if condition = true
+            if condition[i]: # if condition[i] = true
                 colors[i] = self.color
                 density[i] = 10
 
@@ -447,7 +452,19 @@ class Sphere ():
 
 <img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234">
 
+<img width="1194" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/c9cf0923-610f-4948-ac20-a39ad80d2855">
 
+```python
+def accumulated_transmittance(alpha):
+    # T = Π(1-alpha) {j=1, i-1}
+    T = torch.cumprod((1-alpha), 1)
+    # # shift everything to write as j starts at 1 (and not 0)
+    T[:, 1:] = T[:, :-1]
+    # # set first iteration = 1 (e^0 = 1)
+    T[:, 0] = 1
+    return T
+
+```
 
 ### 1.3 Improvement 1: Positional Encoding
 
