@@ -449,8 +449,17 @@ class Sphere ():
         return colors, density
 ```
 
+<table>
+  <tr>
+    <td><img width="446" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/9dbed1ff-9780-4945-92e5-50aa5d06f0d8"></td>
+    <td><img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234"></td>
+  </tr>
+</table>
 
-<img width="437" alt="image" src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/308b2e8b-26d3-4541-a5c9-ff1975e5f234">
+
+
+
+
 
 ```python
     model = Sphere(center, radius, color)
