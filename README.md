@@ -568,9 +568,16 @@ We train for ```200``` epochs and plot the resulting image after each ```10``` e
 Notice how we started with a green sphere and after each ```10```iteration, we can see the changes from **green** to **red**. By iteration ```120``` we have a fully red sphere.
 
 
-
-
 ### 1.3 Improvement 1: Positional Encoding
+The author argues that when the neural network operates directly on the input coordinates ```(x,y,z)``` and the viewing direction,**d**, the resulting renderings struggle to capture fine details in color and geometry. That is, the neural network is **not good** at accurately capturing and displaying these small, detailed changes in color and shape, which can be important for realistic and detailed 3D scene rendering. 
+
+What they did instead was to use ```high-frequency functions``` to map the inputs to a ```higher-dimensional space``` before passing them to the MLP and this accurately captured and modeled the data with intricate, **high-frequency variations**. As shown in the image below, they map the _spatial position_ and _viewing direction_ (after converting from a **spherical** to a **cartesian** coordinates system) into a higher dimensional space using the ```sine``` and ```cosine``` functions. 
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/7bb993ad-4cff-4908-80bd-863f3ce3710f" width="70%" />
+</p>
+
+Note that, for the _3D spatial location_ they use **L = 10**, which means they will use frequency functions up to ```(sin(2^3(x)), cos(2^9(x)))```, and similarly for the _viewing direction_ they use **L = 4**, which ends at ```((sin(2^3(x)), cos(2^3(x)))```. One important thing to observe is that when mapping  into high dimensional space, we are **only** predicting the ```color (r,g,b)``` values alone and **not** the ```density```.
 
 
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
