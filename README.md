@@ -577,7 +577,7 @@ What they did instead was to use ```high-frequency functions``` to map the input
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/7bb993ad-4cff-4908-80bd-863f3ce3710f" width="70%" />
 </p>
 
-Note that, for the _3D spatial location_ they use **L = 10**, which means they will use frequency functions up to ```(sin(2^3(x)), cos(2^9(x)))```, and similarly for the _viewing direction_ they use **L = 4**, which ends at ```((sin(2^3(x)), cos(2^3(x)))```. One important thing to observe is that when mapping  into high dimensional space, we are **only** predicting the ```color (r,g,b)``` values alone and **not** the ```density```.
+Note that, for the _3D spatial location_ they use **L = 10**, which means they will use frequency functions up to ```(sin(2^9(x)), cos(2^9(x)))```, and similarly for the _viewing direction_ they use **L = 4**, which ends at ```((sin(2^3(x)), cos(2^3(x)))```. One important thing to observe is that when mapping  into high dimensional space, we are **only** predicting the ```color (r,g,b)``` values alone and **not** the ```density```.
 
 
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
