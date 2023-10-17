@@ -580,6 +580,36 @@ What they did instead was to use ```high-frequency functions``` to map the input
 Note that, for the _3D spatial location_ they use **L = 10**, which means they will use frequency functions up to ```(sin(2^9(x)), cos(2^9(x)))```, and similarly for the _viewing direction_ they use **L = 4**, which ends at ```((sin(2^3(x)), cos(2^3(x)))```. One important thing to observe is that when mapping  into high dimensional space, we are **only** predicting the ```color (r,g,b)``` values alone and **not** the ```density```.
 
 
+```python
+def positional_encoding(x: torch.Tensor, L: int) -> torch.Tensor:
+    """
+    Args:
+        x (torch.Tensor): Input tensor of shape (N, 3) representing N sets of 3D coordinates.
+        L (int): Parameter for controlling the frequency of encoding.
+
+    Returns:
+       Positionally encoded features of the input coordinates of shape (N, 3 + 6 * L).
+    """
+
+    # empty list to store encodings
+    encoding_components = []
+
+    # Loop over encoding frequencies up to L
+    for j in range(L):
+        # Calculate sine and cosine components for each frequency
+        encoding_components.append(torch.sin(2 ** j * x))
+        encoding_components.append(torch.cos(2 ** j * x))
+
+    # Concatenate the original input with the encoding components
+    encoded_coordinates = torch.cat([x] + encoding_components, dim=1)
+
+    return encoded_coordinates
+```
+
+Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** has 3 features ```(x, y, z)``` and for each of the 3 spatial dimensions (x, y, z), we apply ```L``` frequencies of encoding, resulting in ```2 x L```. Since we have 3 spatial dimensions, we have a total of ```3 x (2 x L) = 6 x L``` encoding components in total. In the end, we concatenate our original features with  encoding components, hence ```3 + 6 x L```.
+
+
+
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
 
 ----------
