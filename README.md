@@ -537,7 +537,9 @@ The author argues that the function to calculate the expected color is **differe
     radius = 0.1
     color = np.array([1., 0., 0.]) #red
 
+    # create model with parameters
     model = Sphere(center, radius, color)
+    # create target image
     b = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
 ```
 
@@ -551,14 +553,23 @@ We will then initialize a second color that will need to be **optimized**. We wi
 We then set our optimizer to **Stochastic Gradient Descent (SGD)**, calculate the **loss** between the _ground truth_ and our _predicted value_, and do **backpropagation** to update the color. 
 
 ```python
-    optimizer = torch.optim.SGD({color_to_optimize}, lr=1e-1)
+    # create an SGD optimizer with the color_to_optimize tensor as the parameter to optimize
+    optimizer = torch.optim.SGD([color_to_optimize], lr=1e-1)
+    # list to store training losses
     training_loss = []
+
     for epoch in range(200):
+        # create a sphere model with the parameters
         model = Sphere(center, radius, color=color_to_optimize)
+        # render the scene - Ax
         Ax = rendering(model, ray_origin, ray_direction, tn=1.0, tf=2.0, bins=100, device='cpu')
+        # calculate the loss as the mean squared difference between Ax and the target image b
         loss = ((Ax - b) ** 2).mean()
+        # zero the gradients in the optimizer
         optimizer.zero_grad()
+        # Compute gradients using backpropagation
         loss.backward()
+        # update model parameters using the optimizer
         optimizer.step()
 ```
 We train for ```200``` epochs and plot the resulting image after each ```10``` epochs. Below is the result
