@@ -595,6 +595,8 @@ Note that, for the _3D spatial location_ they use **L = 10**, which means they w
 
 ## 3. Training NeRF
 
+### 3.1 MLP Architecture
+
 
 
 
