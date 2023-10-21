@@ -643,8 +643,113 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
   <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/9344dced-5dd9-458f-b6e0-4f009a47c6f8" width="80%" />
 </p>
 
+Let's set up the architecture and initializes the parameters:
+
+```python
+    def __init__(self, L_pos=10, L_dir=4, hidden_dim=256):
+        super(Nerf, self).__init()
+        
+        # Frequency of encoding
+        self.L_pos = L_pos
+        self.L_dir = L_dir
+
+        # Fully connected layers
+        # Block 1:
+        self.fc1 = nn.Linear(L_pos * 6 + 3, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc4 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc5 = nn.Linear(hidden_dim, hidden_dim)
+        # Block 2:
+        self.fc6 = nn.Linear(hidden_dim + L_pos * 6 + 3, hidden_dim)
+        self.fc7 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc8 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc9 = nn.Linear(hidden_dim, hidden_dim + 1)
+        # Block 3:
+        self.fc10 = nn.Linear(hidden_dim + L_dir * 6 + 3, hidden_dim // 2)
+        self.fc11 = nn.Linear(hidden_dim // 2, 3)
+
+        # Non-linearities
+        self.relu = nn.ReLU()
+        self.sigmoid = nn.Sigmoid()
+```
+
+Now let's define the forward pass of the network step by step. First, we create encoded features for our spatial position **(x,y,z)** and viewing direction, **d** using the positional_encoding function we described before.
+
+```python
+        x_emb = self.positional_encoding(xyz, self.Lpos)  # [batch_size, Lpos * 6 + 3]
+        d_emb = self.positional_encoding(d, self.Ldir)  # [batch_size, Ldir * 6 + 3]
+```
+
+We then compute the forward pass for Block 1. Notice that we are using ```x_emb``` as input:
+
+```python
+        ### ------------ Block 1:
+        x = self.fc1(x_emb)  # [batch_size, hidden_dim]
+        x = self.relu(x)
+        print("Shape after fc1:", x.shape)
+
+        x = self.fc2(x)
+        x = self.relu(x)
+        print("Shape after fc2:", x.shape)
+
+        x = self.fc3(x)
+        x = self.relu(x)
+        print("Shape after fc3:", x.shape)
+
+        x = self.fc4(x)
+        x = self.relu(x)
+        print("Shape after fc4:", x.shape)
+
+        x = self.fc5(x)
+        x = self.relu(x)
+        print("Shape after fc5:", x.shape)
+```
+
+We do the same for Block 2. We implement the skip connection by concatenating the output of the previous blocks and the original positionally encoded features ```x_emb```. 
 
 
+```python
+        ### ------------ Block 2:
+        x = self.fc6(torch.cat((x, x_emb), dim=1)) #skip connection
+        x = self.relu(x)
+        print("Shape after fc6:", x.shape)
+
+        x = self.fc7(x)
+        x = self.relu(x)
+        print("Shape after fc7:", x.shape)
+
+        x = self.fc8(x)
+        x = self.relu(x)
+        print("Shape after fc7:", x.shape)
+
+        x = self.fc9(x)
+        print("Shape after fc9:", x.shape)
+```
+For Block 3, we first need to extract sigma from the output of the previous blocks and apply a **relu** function on it to constraint the output of the latter to be positive for density. 
+
+```python
+        ### ------------ Block 3:
+
+        # Extract sigma from x (last value)
+        sigma = x[:, -1]
+
+        # Density
+        density = torch.relu(sigma)
+        print("Shape of density:", density.shape)
+
+        # Take all values from except sigma (everything except last one)
+        x = x[:, :-1]  # [batch_size, hidden_dim]
+        print("Shape after x:", x.shape)
+
+        x = self.fc10(torch.cat((x, d_emb), dim=1))
+        x = self.relu(x)
+        print("Shape after fc10:", x.shape)
+
+        color = self.fc11(x)
+        color = self.sigmoid(color)
+        print("Shape after fc11:", color.shape)
+```
 
 --------------------------
 
