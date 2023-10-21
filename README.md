@@ -643,7 +643,9 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
   <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/9344dced-5dd9-458f-b6e0-4f009a47c6f8" width="80%" />
 </p>
 
-Let's set up the architecture and initializes the parameters:
+#### 3.1.1 MLP Architecture
+
+Let's set up the architecture and initialize the parameters. We are using the formula ```(N, 3 + 6 * L)``` to calculate the size of the ```in_features``` parameter. Though the paper states that the input is ```60```, the real input size is ```63```.
 
 ```python
     def __init__(self, L_pos=10, L_dir=4, hidden_dim=256):
@@ -674,14 +676,15 @@ Let's set up the architecture and initializes the parameters:
         self.sigmoid = nn.Sigmoid()
 ```
 
-Now let's define the forward pass of the network step by step. First, we create encoded features for our spatial position **(x,y,z)** and viewing direction, **d** using the positional_encoding function we described before.
+Now let's define the forward pass of the network step by step. First, we create encoded features for our spatial position **(x,y,z)** and viewing direction, **d** using the ```positional_encoding function``` we described before.
 
 ```python
         x_emb = self.positional_encoding(xyz, self.Lpos)  # [batch_size, Lpos * 6 + 3]
         d_emb = self.positional_encoding(d, self.Ldir)  # [batch_size, Ldir * 6 + 3]
 ```
+#### 3.1.2 Block 1
 
-We then compute the forward pass for Block 1. Notice that we are using ```x_emb``` as input:
+We then compute the forward pass for **Block 1**. Notice that we are using ```x_emb``` as input:
 
 ```python
         ### ------------ Block 1:
@@ -705,7 +708,7 @@ We then compute the forward pass for Block 1. Notice that we are using ```x_emb`
         x = self.relu(x)
         print("Shape after fc5:", x.shape)
 ```
-
+#### 3.1.2 Block 2
 We do the same for Block 2. We implement the skip connection by concatenating the output of the previous blocks and the original positionally encoded features ```x_emb```. 
 
 
@@ -726,6 +729,7 @@ We do the same for Block 2. We implement the skip connection by concatenating th
         x = self.fc9(x)
         print("Shape after fc9:", x.shape)
 ```
+#### 3.1.2 Block 3
 For Block 3, we first need to extract sigma from the output of the previous blocks and apply a **relu** function on it to constraint the output of the latter to be positive for density. 
 
 ```python
