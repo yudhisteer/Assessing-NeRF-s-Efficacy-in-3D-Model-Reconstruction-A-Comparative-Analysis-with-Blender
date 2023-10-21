@@ -606,13 +606,13 @@ def positional_encoding(x: torch.Tensor, L: int) -> torch.Tensor:
     # empty list to store encodings
     encoding_components = []
 
-    # Loop over encoding frequencies up to L
+    # loop over encoding frequencies up to L
     for j in range(L):
         # Calculate sine and cosine components for each frequency
         encoding_components.append(torch.sin(2 ** j * x))
         encoding_components.append(torch.cos(2 ** j * x))
 
-    # Concatenate the original input with the encoding components
+    # concatenate original input with encoding components
     encoded_coordinates = torch.cat([x] + encoding_components, dim=1)
 
     return encoded_coordinates
@@ -638,6 +638,10 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 ## 3. Training NeRF
 
 ### 3.1 MLP Architecture
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/9344dced-5dd9-458f-b6e0-4f009a47c6f8" width="80%" />
+</p>
 
 
 
