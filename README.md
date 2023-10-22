@@ -754,6 +754,32 @@ For Block 3, we first need to extract sigma from the output of the previous bloc
         color = self.sigmoid(color)
         print("Shape after fc11:", color.shape)
 ```
+Let's check our code with simulated data:
+
+```python
+    # Simulated data (random for testing)
+    xyz = torch.randn(batch_size=16, 3)
+    d = torch.randn(batch_size=16, 3)
+```
+Below is the output:
+
+```python
+Shape of x_emb:  torch.Size([16, 63])
+Shape of d_emb:  torch.Size([16, 27])
+Shape after fc1: torch.Size([16, 256])
+Shape after fc2: torch.Size([16, 256])
+Shape after fc3: torch.Size([16, 256])
+Shape after fc4: torch.Size([16, 256])
+Shape after fc5: torch.Size([16, 256])
+Shape after fc6: torch.Size([16, 256])
+Shape after fc7: torch.Size([16, 256])
+Shape after fc8: torch.Size([16, 256])
+Shape after fc9: torch.Size([16, 257])
+Shape after fc10: torch.Size([16, 128])
+Shape after fc11: torch.Size([16, 3])
+Density shape: torch.Size([16])
+Color shape: torch.Size([16, 3])
+```
 
 --------------------------
 
