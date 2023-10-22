@@ -1,5 +1,4 @@
-# Neural Radiance Fields (NeRF) on custom synthetic datasets
-
+# Evaluating NeRF for 3D Model Reconstruction: A Blender Comparison
 
 ## Plan of Action
 
