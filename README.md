@@ -648,7 +648,7 @@ Up to this point, we've discussed the high-level representation of the continuou
 The architecture is quite simple: we have 8 fully connected ReLU layers, each with 256 channels. At the 5th layer, there's a skip connection. It's important to note that we take input from the **positional encoding of the input location**. In the 9th layer, we merge the 256-dimensional feature vector with the **positional encoding of the viewing direction**. The final output consists of 3 color channels and 1 density channel.
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/6d75a70b-d978-42b2-896e-7c36c72e3447" width="80%" />
+  <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/6d75a70b-d978-42b2-896e-7c36c72e3447" width="90%" />
 </p>
 
 #### 3.1.1 MLP Architecture
@@ -790,7 +790,7 @@ Color shape: torch.Size([16, 3])
 
 
 <a name="nvs"></a>
-### 3.1 Novel View Synthesis
+### 3.2 Novel View Synthesis
 
 --------------------------
 ## Conclusion
