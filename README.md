@@ -3,13 +3,13 @@
 
 ## Plan of Action
 
-0. Prerequisites
-      - Ray Tracing
-      - Ray Casting
-      - Ray Marching
-      - NeRFing a sphere: Part I
+0. [Prerequisites](#p)
+      - [Ray Tracing](#rt)
+      - [Ray Casting](#rc)
+      - [Ray Marching](#rm)
+      - [NeRFing a sphere: Part I](#ns1)
 
-1. Understanding NeRF
+1. [Understanding NeRF](#un)
      - Volumetric Scene Representation
      - Volume Rendering
      - NeRFing a sphere: Part II
@@ -17,14 +17,16 @@
      - Improvement 2: Hierarchical Volume Sampling
      - NeRFing a sphere: Part II
 
-2. 3D Model using Blender
+2. [3D Model using Blender](#mub)
 
-3. Training NeRF
+3. [Training NeRF](#tn)
 
 
 ---------------
+<a name="p"></a>
 ## 0. Prerequisites
 
+<a name="rt"></a>
 ### 0.1 Ray Tracing
 
 Ray tracing works by calculating how light interacts with objects in a 3D scene. It's like simulating the path of a beam of light as it bounces off surfaces, refracts through materials, and creates shadows. This technique meticulously tracks rays of light from the viewer's eye through each pixel on the screen, considering complex interactions such as reflections and refractions. This results in highly detailed and photorealistic images, making it ideal for movie special effects and rendering realistic scenes in high-end games.
@@ -38,6 +40,7 @@ Ray tracing works by calculating how light interacts with objects in a 3D scene.
     <p>Video source: <a href="https://www.youtube.com/watch?v=NRmkr50mkEE&t=530s&ab_channel=TwoMinutePapers">Ray Tracing: How NVIDIA Solved the Impossible!</a></p>
 </div>
 
+<a name="rc"></a>
 ### 0.2 Ray Casting
 Ray casting is more straightforward. Imagine you're taking a photo with a camera. For each pixel on the screen, a single ray is sent out from your eye, and it checks if it hits anything in the scene. This technique is quick because it doesn't consider complex lighting effects like reflections or global illumination. It's suitable for real-time applications where speed is essential, such as early video games and simple simulations.
 
@@ -49,7 +52,7 @@ Ray casting is more straightforward. Imagine you're taking a photo with a camera
     <p>Video source: <a href="https://www.youtube.com/watch?v=5xyeWBxmqzc&list=PLlYT7ZZOcBNA1hVBjkKFMnW0YDDODdy40&ab_channel=FinFET">How to make a simple 3D* game in Python from scratch - Ray casting</a></p>
 </div>
 
-
+<a name="rm"></a>
 ### 0.3 Ray Marching
 Ray marching is like exploring a scene step by step. It sends out a ray and takes small steps along it, checking for objects or changes in the scene. This is useful for creating unusual and mathematical shapes or for rendering things like clouds or fractals where the structure is complex and not always easy to calculate all at once.
 
@@ -69,7 +72,7 @@ Ray marching is like exploring a scene step by step. It sends out a ray and take
 Instead of directly calculating intersections and shading like traditional ray casting, NeRF uses a **neural network** to learn the 3D representation of the scene. The neural network takes the ```rays'``` **directions** and **origins** as **input** and **predicts** the ```3D scene's appearance (R,G,B)``` and ```structure (Density)``` at those points.
 
 
-
+<a name="ns1"></a>
 ### 0.4 NeRFing a sphere - Part I
 Before diving deep into NeRFing a ```3D``` model, I want to take the simplest example: **a sphere**. We will first try to apply the principles as shown in the NeRF paper to 3D model a sphere. In this section, we will apply **ray-casting** techniques in order to create a sphere then we will improve it in the following sections.
 
@@ -272,7 +275,7 @@ Let's explore the NeRF paper first before improving our sphere further.
 
 
 --------------------------
-
+<a name="un"></a>
 ## 1. Understanding NeRF
 
 
@@ -625,7 +628,7 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
 
 ----------
-
+<a name="mub"></a>
 ## 2. 3D Model using Blender
 
 
@@ -634,17 +637,19 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 
 
 ---------------
-
+<a name="tn"></a>
 ## 3. Training NeRF
 
 ### 3.1 MLP Architecture
+Up to this point, we've discussed the high-level representation of the continuous 5D input through an MLP. Now, let's delve into the fully connected network and dissect its components. 
+
+The architecture is quite simple: we have 8 fully connected ReLU layers, each with 256 channels. At the 5th layer, there's a skip connection. It's important to note that we take input from the **positional encoding of the input location**. In the 9th layer, we merge the 256-dimensional feature vector with the **positional encoding of the viewing direction**. The final output consists of 3 color channels and 1 density channel.
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/9344dced-5dd9-458f-b6e0-4f009a47c6f8" width="80%" />
+  <img src="https://github.com/yudhisteer/Neural-Radiance-Fields-NeRF-on-custom-synthetic-datasets/assets/59663734/6d75a70b-d978-42b2-896e-7c36c72e3447" width="80%" />
 </p>
 
 #### 3.1.1 MLP Architecture
-
 Let's set up the architecture and initialize the parameters. We are using the formula ```(N, 3 + 6 * L)``` to calculate the size of the ```in_features``` parameter. Though the paper states that the input is ```60```, the real input size is ```63```.
 
 ```python
@@ -683,8 +688,7 @@ Now let's define the forward pass of the network step by step. First, we create 
         d_emb = self.positional_encoding(d, self.Ldir)  # [batch_size, Ldir * 6 + 3]
 ```
 #### 3.1.2 Block 1
-
-We then compute the forward pass for **Block 1**. Notice that we are using ```x_emb``` as input:
+The input location undergoes positional encoding and passes through a sequence of ```8``` fully connected ReLU layers, each comprising ```256``` channels.
 
 ```python
         ### ------------ Block 1:
@@ -709,8 +713,7 @@ We then compute the forward pass for **Block 1**. Notice that we are using ```x_
         print("Shape after fc5:", x.shape)
 ```
 #### 3.1.2 Block 2
-We do the same for Block 2. We implement the skip connection by concatenating the output of the previous blocks and the original positionally encoded features ```x_emb```. 
-
+The author adopts the architectural approach from ```DeepSDF```, incorporating a **skip connection** that appends the input to the activation of the fifth layer. 
 
 ```python
         ### ------------ Block 2:
@@ -730,7 +733,7 @@ We do the same for Block 2. We implement the skip connection by concatenating th
         print("Shape after fc9:", x.shape)
 ```
 #### 3.1.2 Block 3
-For Block 3, we first need to extract sigma from the output of the previous blocks and apply a **relu** function on it to constraint the output of the latter to be positive for density. 
+For Block 3, an additional layer generates the **volume density**, which is rectified using a **ReLU** to ensure **non-negativity** and a ```256```-dimensional feature vector. This feature vector is **concatenated** with the positional encoding of the input viewing direction **d**, and the combined data is processed by an extra fully connected ReLU layer with ```128``` channels. Finally, a last layer, employing a **sigmoid activation**, produces the emitted ```RGB radiance``` at position **x**, as observed from a ray with direction **d**.
 
 ```python
         ### ------------ Block 3:
@@ -754,10 +757,10 @@ For Block 3, we first need to extract sigma from the output of the previous bloc
         color = self.sigmoid(color)
         print("Shape after fc11:", color.shape)
 ```
-Let's check our code with simulated data:
+Let's check our code with **simulated data**:
 
 ```python
-    # Simulated data (random for testing)
+    # Simulated data
     xyz = torch.randn(batch_size=16, 3)
     d = torch.randn(batch_size=16, 3)
 ```
