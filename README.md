@@ -10,16 +10,18 @@
       - [NeRFing a sphere: Part I](#ns1)
 
 1. [Understanding NeRF](#un)
-     - Volumetric Scene Representation
-     - Volume Rendering
-     - NeRFing a sphere: Part II
-     - Improvement 1: Positional Encoding
-     - Improvement 2: Hierarchical Volume Sampling
-     - NeRFing a sphere: Part II
+     - [Volumetric Scene Representation](#vsr)
+     - [Volume Rendering](#vr)
+     - [NeRFing a sphere: Part II](#ns2)
+     - [Improvement 1: Positional Encoding](#pe)
+     - [Improvement 2: Hierarchical Volume Sampling](#hs)
 
 2. [3D Model using Blender](#mub)
 
+
 3. [Training NeRF](#tn)
+      - [Fully Connected Network](#fcn)
+      - [Novel View Synthesis](#nvs)
 
 
 ---------------
@@ -282,7 +284,7 @@ Let's explore the NeRF paper first before improving our sphere further.
 
 
 
-
+<a name="vsr"></a>
 ### 1.1 Volumetric Scene Representation
 What has been done before NeRF is to have a set of images and use 3D CNN to predict a discrete volumetric representation such as a **Voxel Grid**. Though this technique has demonstrated impressive results, however, computing and storing these large voxel grids can  become computationally expensive for large and high-resolution scenes. What NeRF does is represent a scene as a **continuous** ```5D function``` which consists of **spatial 3D location** ```x = (x,y,z)``` of a point and the **2D viewing direction** ```d = (θ, φ)```. This is the **input**.
 
@@ -336,8 +338,7 @@ Moreover, the author argues that they promote multiview consistency in the repre
 
 
 
-
-
+<a name="vr"></a>
 ### 1.2 Volume Rendering
 Recall that density, σ, can be binary, where it equals ```1``` if the point is on the object's surface, i.e., it intersects with the scene geometry, and ```0``` if it is in empty space. Hence, everywhere in space, there is a value that represents density and color at that point in space.
 
@@ -403,7 +404,7 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 </p>
 
 
-
+<a name="ns2"></a>
 ### 1.3 NeRFing a sphere: Part II
 Signed distance functions, SDFs,  when passed the coordinates of a point in space, return the shortest distance between that point and some surface. The sign of the return value indicates whether the point is inside that surface or outside. For our case, points inside the sphere will have a ```distance from the origin < the radius```, points on the sphere will have ```distances = equal to the radius```, and points outside the sphere will have ```distances > than the radius```.
 
@@ -581,7 +582,7 @@ We train for ```200``` epochs and plot the resulting image after each ```10``` e
 
 Notice how we started with a green sphere and after each ```10```iteration, we can see the changes from **green** to **red**. By iteration ```120``` we have a fully red sphere.
 
-
+<a name="pe"></a>
 ### 1.3 Improvement 1: Positional Encoding
 The author argues that when the neural network operates directly on the input coordinates ```(x,y,z)``` and the viewing direction,**d**, the resulting renderings struggle to capture fine details in color and geometry. That is, the neural network is **not good** at accurately capturing and displaying these small, detailed changes in color and shape, which can be important for realistic and detailed 3D scene rendering. 
 
@@ -624,7 +625,7 @@ def positional_encoding(x: torch.Tensor, L: int) -> torch.Tensor:
 Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** has 3 features ```(x, y, z)``` and for each of the 3 spatial dimensions (x, y, z), we apply ```L``` frequencies of encoding, resulting in ```2 x L```. Since we have 3 spatial dimensions, we have a total of ```3 x (2 x L) = 6 x L``` encoding components in total. In the end, we concatenate our original features with  encoding components, hence ```3 + 6 x L```.
 
 
-
+<a name="hs"></a>
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
 
 ----------
@@ -640,7 +641,8 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 <a name="tn"></a>
 ## 3. Training NeRF
 
-### 3.1 MLP Architecture
+<a name="fcn"></a>
+### 3.1 Fully Connected Network
 Up to this point, we've discussed the high-level representation of the continuous 5D input through an MLP. Now, let's delve into the fully connected network and dissect its components. 
 
 The architecture is quite simple: we have 8 fully connected ReLU layers, each with 256 channels. At the 5th layer, there's a skip connection. It's important to note that we take input from the **positional encoding of the input location**. In the 9th layer, we merge the 256-dimensional feature vector with the **positional encoding of the viewing direction**. The final output consists of 3 color channels and 1 density channel.
@@ -787,8 +789,11 @@ Color shape: torch.Size([16, 3])
 --------------------------
 
 
+<a name="nvs"></a>
+### 3.1 Novel View Synthesis
 
-
+--------------------------
+## Conclusion
 
 
 ## References
