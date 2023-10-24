@@ -30,7 +30,7 @@
 <a name="rt"></a>
 ### 0.1 Ray Tracing
 
-Ray tracing works by calculating how light interacts with objects in a 3D scene. It's like simulating the path of a beam of light as it bounces off surfaces, refracts through materials, and creates shadows. This technique meticulously tracks rays of light from the viewer's eye through each pixel on the screen, considering complex interactions such as reflections and refractions. This results in highly detailed and photorealistic images, making it ideal for movie special effects and rendering realistic scenes in high-end games.
+Ray tracing works by calculating how light interacts with objects in a 3D scene. It's like simulating the path of a beam of light as it bounces off surfaces, refracts through materials, and creates shadows. This technique tracks rays of light from the viewer's eye through each pixel on the screen, considering complex interactions such as **reflections** and **refractions**. This results in **highly detailed** and **photorealistic images**.
 
 
 <div style="text-align: center;">
@@ -43,7 +43,7 @@ Ray tracing works by calculating how light interacts with objects in a 3D scene.
 
 <a name="rc"></a>
 ### 0.2 Ray Casting
-Ray casting is more straightforward. Imagine you're taking a photo with a camera. For each pixel on the screen, a single ray is sent out from your eye, and it checks if it hits anything in the scene. This technique is quick because it doesn't consider complex lighting effects like reflections or global illumination. It's suitable for real-time applications where speed is essential, such as early video games and simple simulations.
+Ray casting is more straightforward. Imagine you're taking a photo with a camera. For each pixel on the screen, a single ray is sent out from your eye, and it checks if it **hits** anything in the scene. This technique is quick because it doesn't consider complex lighting effects like reflections or global illumination. It's suitable for **real-time applications** where speed is essential, such as early video games and simple simulations.
 
 <div style="text-align: center;">
   <video src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/8bfce500-6c63-47ff-8fe3-ed082298fb02" controls="controls" style="max-width: 730px;">
@@ -55,7 +55,7 @@ Ray casting is more straightforward. Imagine you're taking a photo with a camera
 
 <a name="rm"></a>
 ### 0.3 Ray Marching
-Ray marching is like exploring a scene step by step. It sends out a ray and takes small steps along it, checking for objects or changes in the scene. This is useful for creating unusual and mathematical shapes or for rendering things like clouds or fractals where the structure is complex and not always easy to calculate all at once.
+Ray marching is like exploring a scene step by step. It sends out a ray and takes **small steps** along it, checking for objects or changes in the scene. This is useful for creating unusual and mathematical shapes or for rendering things like **clouds** or **fractals** where the structure is **complex** and not always easy to calculate all at once.
 
 
 
