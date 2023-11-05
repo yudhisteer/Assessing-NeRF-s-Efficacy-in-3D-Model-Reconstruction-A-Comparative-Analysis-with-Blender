@@ -597,16 +597,7 @@ Let's see how we can code this:
 
 ```python
 def positional_encoding(x: torch.Tensor, L: int) -> torch.Tensor:
-    """
-    Args:
-        x (torch.Tensor): Input tensor of shape (N, 3) representing N sets of 3D coordinates.
-        L (int): Parameter for controlling the frequency of encoding.
-
-    Returns:
-       Positionally encoded features of the input coordinates of shape (N, 3 + 6 * L).
-    """
-
-    # empty list to store encodings
+    # to store encodings
     encoding_components = []
 
     # loop over encoding frequencies up to L
