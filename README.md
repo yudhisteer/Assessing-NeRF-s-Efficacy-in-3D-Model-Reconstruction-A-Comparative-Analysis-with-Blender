@@ -1,4 +1,4 @@
-# Evaluating NeRF for 3D Model Reconstruction: A Blender Comparison
+# Assessing NeRF's Efficacy in 3D Model Reconstruction: A Comparative Analysis with Blender
 
 ## Plan of Action
 
