@@ -275,7 +275,7 @@ Let's explore the NeRF paper first before improving our sphere further.
 
 
 
---------------------------
+----------------------------
 <a name="un"></a>
 ## 1. Understanding NeRF
 
