@@ -652,14 +652,13 @@ blender_model/ <- overall dataset folder
     test/ <- testing intrinsic and extrinsic
         intrinsics/ <- intrinsic camera parameters
             test_0.txt
-            test_0.txt
+            test_1.txt
             ...
         pose/ <- extrinsic camera parameters
             test_0.txt
             test_1.txt
             ...
 ```
-
 
 ---------------
 <a name="tn"></a>
