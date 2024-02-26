@@ -669,6 +669,8 @@ Image Extraction/
          └── .../
 ```
 
+![v2](https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/b6b1f5f9-77a0-4850-975c-5b2f06b78b24)
+
 ---------------
 <a name="tn"></a>
 ## 3. Training NeRF
