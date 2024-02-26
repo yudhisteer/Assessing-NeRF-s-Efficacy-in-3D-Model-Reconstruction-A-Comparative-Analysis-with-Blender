@@ -631,33 +631,42 @@ In the fall of 2023, I took an AR/VR class where I learned Blender from [Studio 
 
 I will then run a script inside Blender that will take pictures at different angles of the model and register the intrinsic and extrinsic parameters of the camera. Below is the folder storage format for test and train:
 
-```text
-blender_model/ <- overall dataset folder
-    images/ <- training and testing images
-        test_0.png
-        test_1.png
-        ...
-        train_0.png
-        train_1.png
-        ...
-    train/ <- training intrinsic and extrinsic
-        intrinsics/ <- intrinsic camera parameters
-            train_0.txt
-            train_1.txt
-            ...
-        pose/ <- extrinsic camera parameters
-            train_0.txt
-            train_1.txt
-            ...
-    test/ <- testing intrinsic and extrinsic
-        intrinsics/ <- intrinsic camera parameters
-            test_0.txt
-            test_1.txt
-            ...
-        pose/ <- extrinsic camera parameters
-            test_0.txt
-            test_1.txt
-            ...
+```python
+Image Extraction/
+│
+├── images/
+│   ├── train_0.png/
+│   ├── train_1.png/
+│   └── .../
+│   ├── test_0.png/
+│   ├── test_1.png/
+│   └── .../
+│
+├── train/
+│   ├── intrinsics/
+│   │   ├── train_0.txt/
+│   │   ├── train_1.txt/
+│   │   ├── train_2.txt/
+│   │   └── .../
+│   │
+│   └── pose/
+│       ├── train_0.txt/
+│       ├── train_1.txt/
+│       ├── train_2.txt/
+│       └── .../           
+│
+└── test/
+     ├── intrinsics/
+     │   ├── test_0.txt/
+     │   ├── test_1.txt/
+     │   ├── test_2.txt/
+     │   └── .../
+     │
+     └── pose/
+         ├── test_0.txt/
+         ├── test_1.txt/
+         ├── test_2.txt/
+         └── .../
 ```
 
 ---------------
