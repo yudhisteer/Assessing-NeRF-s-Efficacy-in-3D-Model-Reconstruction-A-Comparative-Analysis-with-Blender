@@ -622,9 +622,43 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 <a name="mub"></a>
 ## 2. 3D Model using Blender
 
+In the fall of 2023, I took an AR/VR class where I learned Blender from [Studio X](https://www.library.rochester.edu/spaces/studio-x) at the University of Rochester. Below is my 3D model from that class which is a combination of 3D meshes like cylinder, cube, cone, torus, and ico sphere. 
 
+<div style="text-align: center;">
+  <video src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/19e96775-bb2e-4e3a-9a0f-3e23f404a32a" controls="controls" style="max-width: 730px;">
+  </video>
+</div>
 
+I will then run a script inside Blender that will take pictures at different angles of the model and register the intrinsic and extrinsic parameters of the camera. Below is the folder storage format for test and train:
 
+```text
+blender_model/ <- overall dataset folder
+    images/ <- training and testing images
+        test_0.png
+        test_1.png
+        ...
+        train_0.png
+        train_1.png
+        ...
+    train/ <- training intrinsic and extrinsic
+        intrinsics/ <- intrinsic camera parameters
+            train_0.txt
+            train_1.txt
+            ...
+        pose/ <- extrinsic camera parameters
+            train_0.txt
+            train_1.txt
+            ...
+    test/ <- testing intrinsic and extrinsic
+        intrinsics/ <- intrinsic camera parameters
+            test_0.txt
+            test_0.txt
+            ...
+        pose/ <- extrinsic camera parameters
+            test_0.txt
+            test_1.txt
+            ...
+```
 
 
 ---------------
