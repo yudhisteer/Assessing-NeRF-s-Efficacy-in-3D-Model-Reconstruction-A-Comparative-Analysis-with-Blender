@@ -848,3 +848,5 @@ Color shape: torch.Size([16, 3])
 15. https://dtransposed.github.io/blog/2022/08/06/NeRF/
 16. https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux
 17. https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/
+18. https://www.youtube.com/watch?v=PeRRp1cFuH4
+19. https://docs.nerf.studio/nerfology/methods/instant_ngp.html
