@@ -350,7 +350,7 @@ From the function above, we want to optimize the **weights** ![CodeCogsEqn (4)](
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/673bcdde-e529-421c-ab15-fe0f8ff66475" width="70%" />
 </p>
 <div align="center">
-    <p>Image Source: <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">Spherical coordinate system</a></p>
+    <p>Image Source: <a href="https://arxiv.org/pdf/2003.08934.pdf">NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></p>
 </div>
 
 Let's explain the overall pipeline of the NeRF architecture:
@@ -390,7 +390,7 @@ Recall that density, σ, can be binary, where it equals ```1``` if the point is 
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/5e70e0bc-ac28-4816-b27f-f53b0d97b501" width="60%" />
 </p>
 <div align="center">
-    <p>Image Source: <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">Spherical coordinate system</a></p>
+    <p>Image Source: <a href="https://arxiv.org/pdf/2003.08934.pdf">NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></p>
 </div>
 
 
@@ -423,6 +423,9 @@ We then sample a few points along the ray. For each point, we record the density
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/e74f3013-bae2-487d-8485-f8d73f7643a9" width="30%" />
 </p>
+<div align="center">
+    <p>Image Source: <a href="https://www.youtube.com/watch?v=HfJpQCBTqZs&t=1576s">Understanding and Extending Neural Radiance Fields</a></p>
+</div>
 
 4. This estimation process computes the color ![CodeCogsEqn (12)](https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/38bc9dd1-b888-4520-b263-e9f2f5158c64) of any camera ray by summing up contributions from each segment of the ray's path.
 
@@ -446,6 +449,10 @@ The author also argues that they allow the color of any 3D point to vary as a fu
 <p align="center">
   <img src="https://github.com/yudhisteer/Training-a-Neural-Radiance-Fields-NeRF-/assets/59663734/2cbb0834-8d8e-4ef1-a7e1-0c0eff2d5092" width="60%" />
 </p>
+<div align="center">
+    <p>Image Source: <a href="https://arxiv.org/pdf/2003.08934.pdf">NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></p>
+</div>
+
 
 
 <a name="ns2"></a>
@@ -880,7 +887,7 @@ Below are the extracted mesh for different bounds. As explained above, a bound b
     </table>
 </div>
 
-Here's the result after ```5``` epochs. We clearly see the structure of the 3D model - the rectangular body, the two cylindrical eyes, the torus smile, the cone hat and, the eco-sphere bottom - though it is not as refined as the blender model. This may be due to not implementing the hierarchical volume sampling feature of NeRF.  
+Here's the result after ```5``` epochs. We clearly see the structure of the 3D model - the rectangular body, the two cylindrical eyes, the torus smile, the cone hat, and, the eco-sphere bottom - though it is not as refined as the blender model. This may be due to not implementing the hierarchical volume sampling feature of NeRF.  
 
 <div style="text-align: center;">
   <video src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/80a30866-00ee-437a-86f8-1fb974db4914" controls="controls" style="max-width: 730px;">
@@ -890,25 +897,45 @@ Here's the result after ```5``` epochs. We clearly see the structure of the 3D m
 
 --------------------------
 ## Conclusion
+In this project, we showed how to create a vanilla NeRF from scratch (though we emitted the Hierarchical Volume Sampling technique). We did mesh extraction but did not see color extraction for the 3D reconstructed model. The field of NeRF has since exploded and now has more advanced techniques such as Instant-NGP, iNeRF, KiloNeRF, FastNeRF, SqueezeNeRF, and so on. We needed known camera parameters (intrinsic and extrinsic) for this NeRF but now we also have NERF without known camera parameters. All in all, this remains a good experience to see really how NeRF works.
 
 
 ## References
-1. https://www.youtube.com/watch?v=CRlN-cYFxTk&ab_channel=YannicKilcher
-2. https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik
-3. https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL
-4. https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs
-5. https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher
-6. https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/
-7. https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers
-8. https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno
-9. https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers
-10. https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers
-11. https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee
-12. https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch
-13. https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.
-14. https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#
-15. https://dtransposed.github.io/blog/2022/08/06/NeRF/
-16. https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux
-17. https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/
-18. https://www.youtube.com/watch?v=PeRRp1cFuH4
-19. https://docs.nerf.studio/nerfology/methods/instant_ngp.html
+[1] YouTube. (n.d.). Yannic Kilcher - NeRF: Representing Scenes as Neural Radiance Fields. [Video]. [https://www.youtube.com/watch?v=CRlN-cYFxTk&ab_channel=YannicKilcher](https://www.youtube.com/watch?v=CRlN-cYFxTk&ab_channel=YannicKilcher)
+
+[2] YouTube. (n.d.). Matthew Tancik - Neural Radiance Fields: The Next Step in Neural Rendering. [Video]. [https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik](https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik)
+
+[3] YouTube. (n.d.). BEN MILDENHALL - NeRF: Inverting Ray Marching. [Video]. [https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL](https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL)
+
+[4] FXGuide. (n.d.). The Art of NeRFs - Part 1. [Article]. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs)
+
+[5] YouTube. (n.d.). Yannic Kilcher - NeRF: Representing Scenes as Neural Radiance Fields (Q&A Section). [Video]. [https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher](https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher)
+
+[6] FXGuide. (n.d.). The Art of NeRFs - Part 2: Gaussian Splats, RT NeRFs, Stitching and Adding Stable Diffusion into NeRFs. [Article]. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/)
+
+[7] YouTube. (n.d.). Two Minute Papers - NeRF in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers)
+
+[8] YouTube. (n.d.). TheCherno - Rendering a 3D Scene with Ray Tracing (in C++). [Video]. [https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno](https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno)
+
+[9] YouTube. (n.d.). Two Minute Papers - Neural Radiance Fields in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers)
+
+[10] YouTube. (n.d.). Two Minute Papers - Neural Rendering in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers)
+
+[11] YouTube. (n.d.). Bob Laramee - Ray Marching and Signed Distance Functions. [Video]. [https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee](https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee)
+
+[12] YouTube. (n.d.). PyTorch - NeRF: Representing Scenes as Neural Radiance Fields (PyTorch Implementation). [Video]. [https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch](https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch)
+
+[13] Peter Stefek. (n.d.). NeRF - A 3D Reconstruction Technique. [Webpage]. [https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.](https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.)
+
+[14] DataGen Tech. (n.d.). Neural Radiance Field (NeRF). [Webpage]. [https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#](https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#)
+
+[15] DTransposed. (n.d.). NeRF - A Brief Introduction. [Webpage]. [https://dtransposed.github.io/blog/2022/08/06/NeRF/](https://dtransposed.github.io/blog/2022/08/06/NeRF/)
+
+[16] YouTube. (n.d.). Auctux - Ray Marching and Volumetric Rendering. [Video]. [https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux](https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux)
+
+[17] Jamie Wong. (n.d.). Ray Marching and Signed Distance Functions. [Webpage]. [https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/](https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/)
+
+[18] YouTube. (n.d.). Károly Zsolnai-Fehér - The Inimitable Art of NeRF. [Video]. [https://www.youtube.com/watch?v=PeRRp1cFuH4](https://www.youtube.com/watch?v=PeRRp1cFuH4)
+
+[19] NeRF Studio. (n.d.). NeRFology - Instant NeRF and Gradient-Free Sampling. [Webpage]. [https://docs.nerf.studio/nerfology/methods/instant_ngp.html](https://docs.nerf.studio/nerfology/methods/instant_ngp.html)
+
