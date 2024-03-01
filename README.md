@@ -1,4 +1,10 @@
 # Assessing NeRF's Efficacy in 3D Model Reconstruction: A Comparative Analysis with Blender
+[NeRF](https://arxiv.org/pdf/2003.08934.pdf) in 2020 changed 3D reconstruction by showing how to _effectively optimize neural radiance fields to render photorealistic novel views of scenes with complicated geometry and appearance_. In my previous project, I showed how to do 3D reconstruction with Multi-View Stereo (MVS) and Structure from Motion (SfM) which can generate "decent results" However, NeRF uses a fully connected (non-convolutional) deep network to represent a scene that achieved state-of-the-art results.
+
+After taking the "Intro to Blender" by Studio X at UofR, I wanted to work more on my blender model using NeRF. I wanted to see how close we can match the 3D blender model if I randomly only generate images of the 3D model along with their intrinsic and extrinsic parameters, and input them into a NeRF model. This project focuses on building a vanilla-NeRF model from scratch based on the NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis (2020) paper. Note that latest NeRF methods use hashing as in [instant-NGP](https://docs.nerf.studio/nerfology/methods/instant_ngp.html) since it significantly reduces the required number of layers in MLP. Also, for purely Visual reconstruction [Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) is significantly superior to NeRFs. However, this remains a good exercise to understand the mechanics behind the paper which changed 3D reconstruction.
+
+## Dataset
+
 
 ## Plan of Action
 
