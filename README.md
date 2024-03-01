@@ -70,6 +70,7 @@ Clown/
 ---------------
 <a name="p"></a>
 ## 0. Prerequisites
+Before we dive into NeRF, let's get a very brief introduction to the different techniques used in computer graphics to render 3D scenes by simulating the way light interacts with objects.
 
 <a name="rt"></a>
 ### 0.1 Ray Tracing
