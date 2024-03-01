@@ -825,6 +825,60 @@ Color shape: torch.Size([16, 3])
 
 <a name="nvs"></a>
 ### 3.2 Novel View Synthesis
+To have a good 3D reconstruction, one parameter that we need to control is ```tn``` and ```tf``` which are the near and far bounds, respectively, along a ray. We generated our data from Blender by rotating the camera on a sphere with a radius of ```3```.  This means that the object can not be in the bounds outside ```tn = 0```, and ```tn = 6```. Also, the object is smaller than ```(2, 2)```, so an even better bound would be something like ```tn = 2``` and ```tf = 4```. As a rule, **tn = (radius - object_size - 0.2)** and **tf = (radius + object_size + 0.2)**.
+
+We test our model on the test dataset which consists of 10 images and below are the results for different bounds. We also calculate the metric PSNR (Peak Signal-to-Noise Ratio) which is used to measure the quality of reconstruction of an image. It is expressed in decibels (dB) and higher values indicate better quality. A value of ```29.3``` dB was obtained.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/4b762118-f8b7-482b-98a4-842c027b70d7" />
+</p>
+
+
+<div style="display: flex; justify-content: center;">
+      <table>
+        <tr>
+          <th>[tn, tf] = [8, 12]</th>
+          <th>[tn, tf] = [1, 6]</th>
+          <th>[tn, tf] = [2, 4]</th>
+        </tr>
+        <tr>
+          <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/6b9a16db-e348-471b-b057-6608dd4e3c82" alt="First Image" height="300"/></td>
+          <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/89adb6b7-fb98-40af-ad20-171bc178cc27" alt="Second Image" height="300"/></td>
+          <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/d4d60c52-1435-46d1-a23e-cbb966ffdd89" alt="Third Image" height="300"/></td>
+        </tr>
+      </table>
+</div>
+
+Below are the extracted mesh for different bounds. As explained above, a bound between 2 and 4 would be more appropriate for this dataset.
+
+<div style="display: flex; justify-content: center;">
+    <table>
+      <tr>
+        <th>[tn, tf] = [8, 12]</th>
+        <th>[tn, tf] = [6, 10]</th>
+        <th>[tn, tf] = [3, 8]</th>
+      </tr>
+      <tr>
+        <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/7d383d5a-f6f1-49bc-80dd-c2dd8af36698" alt="Image 1" height="320"/></td>
+        <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/aa2c57d8-ff78-4c77-9068-3e4c995eec36" alt="Image 2" height="320"/></td>
+        <td><img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/1c1cb8e3-f0c7-4320-a25f-c1eaf9d2f7aa" alt="Image 3" height="320"/></td>
+      </tr>
+    </table>
+</div>
+
+We trained the model for ```5``` epochs and we see how the loss curve beautifully decreases to near ```0```.
+
+<p align="center">
+  <img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/a24bf2be-549a-4639-aa01-d717b9a45cc4" width="40%" />
+</p>
+
+Here's the result after ```5``` epochs. We clearly see the structure of the 3D model - the rectangular body, the two cylindrical eyes, the torus smile, the cone hat and, the eco-sphere bottom - though it is not as refined as the blender model. This may be due to not implementing the hierarchical volume sampling feature of NeRF.  
+
+<div style="text-align: center;">
+  <video src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/80a30866-00ee-437a-86f8-1fb974db4914" controls="controls" style="max-width: 730px;">
+  </video>
+</div>
+
 
 --------------------------
 ## Conclusion
