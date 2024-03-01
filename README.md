@@ -7,7 +7,7 @@ After taking the "Intro to Blender" by Studio X at UofR, I wanted to work more o
 One drawback of NeRF (the one which we will implement) is that once trained, we cannot use the model to 3D reconstruct another object. That is, suppose we have images of pineapple and we use NeRF to 3D reconstruct the pineapple. We cannot use that same model to 3D reconstruct a banana for example. This means, that if we want to 3D reconstruct the banana, we need to train it specifically for these images and then extract the mesh. Hence, we generate our images from Blender by running the [Blender.py](https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/blob/main/Blender.py) script inside Blender which has 100 images (90 training, 10 testing) by rotating the camera on a sphere of radius 3. For each image, we also extract the intrinsic and extrinsic parameters associated. Below is the associated file format for the "[Clown](https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/tree/main/images)" dataset:
 
 ```python
-Image Extraction/
+Clown/
 │
 ├── images/
 │   ├── train_0.png/
