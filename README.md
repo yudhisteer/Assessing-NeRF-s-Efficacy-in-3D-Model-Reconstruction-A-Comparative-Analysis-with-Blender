@@ -903,39 +903,41 @@ In this project, we showed how to create a vanilla NeRF from scratch (though we 
 ## References
 [1] YouTube. (n.d.). Yannic Kilcher - NeRF: Representing Scenes as Neural Radiance Fields. [Video]. [https://www.youtube.com/watch?v=CRlN-cYFxTk&ab_channel=YannicKilcher](https://www.youtube.com/watch?v=CRlN-cYFxTk&ab_channel=YannicKilcher)
 
-[2] YouTube. (n.d.). Matthew Tancik - Neural Radiance Fields: The Next Step in Neural Rendering. [Video]. [https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik](https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik)
+[2] YouTube. (n.d.). Matthew Tancik - NeRF: Neural Radiance Fields. [Video]. [https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik](https://www.youtube.com/watch?v=JuH79E8rdKc&ab_channel=MatthewTancik)
 
-[3] YouTube. (n.d.). BEN MILDENHALL - NeRF: Inverting Ray Marching. [Video]. [https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL](https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL)
+[3] YouTube. (n.d.). BEN MILDENHALL - [ECCV 2020] NeRF: Neural Radiance Fields (10 min talk). [Video]. [https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL](https://www.youtube.com/watch?v=LRAqeM8EjOo&ab_channel=BENMILDENHALL)
 
-[4] FXGuide. (n.d.). The Art of NeRFs - Part 1. [Article]. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs)
+[4] FXGuide. (n.d.). The Art of NeRFs Part 1. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part1/?lid=7n16dhn58fxs)
 
-[5] YouTube. (n.d.). Yannic Kilcher - NeRF: Representing Scenes as Neural Radiance Fields (Q&A Section). [Video]. [https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher](https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher)
+[5] YouTube. (n.d.). Yannic Kilcher - NeRF: Representing Scenes as Neural Radiance Fields (Extended). [Video]. [https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher](https://www.youtube.com/watch?v=CRlN-cYFxTk&t=1745s&ab_channel=YannicKilcher)
 
-[6] FXGuide. (n.d.). The Art of NeRFs - Part 2: Gaussian Splats, RT NeRFs, Stitching and Adding Stable Diffusion into NeRFs. [Article]. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/)
+[6] FXGuide. (n.d.). The Art of NeRFs Part 2: Gaussian Splats, RT NeRFs, Stitching, and Adding Stable Diffusion into NeRFs. [https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/](https://www.fxguide.com/fxfeatured/the-art-of-nerfs-part-2-guassian-splats-rt-nerfs-stitching-and-adding-stable-diffusion-into-nerfs/)
 
-[7] YouTube. (n.d.). Two Minute Papers - NeRF in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers)
+[7] YouTube. (n.d.). Two Minute Papers - This Neural Network Learned To Look Around In Real Scenes! (NERF). [Video]. [https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=nCpGStnayHk&ab_channel=TwoMinutePapers)
 
-[8] YouTube. (n.d.). TheCherno - Rendering a 3D Scene with Ray Tracing (in C++). [Video]. [https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno](https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno)
+[8] YouTube. (n.d.). The Cherno - Rays and Spheres: The MATH! // Ray Tracing series. [Video]. [https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno](https://www.youtube.com/watch?v=4NshnkzOdI0&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&index=2&ab_channel=TheCherno)
 
-[9] YouTube. (n.d.). Two Minute Papers - Neural Radiance Fields in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers)
+[9] YouTube. (n.d.). Two Minute Papers - NVIDIA Did It: Ray Tracing 10,000 Times Faster!. [Video]. [https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=AjkiBRNVeV8&ab_channel=TwoMinutePapers)
 
-[10] YouTube. (n.d.). Two Minute Papers - Neural Rendering in Less Than 2 Minutes. [Video]. [https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers)
+[10] YouTube. (n.d.). Two Minute Papers - Ray Tracing: How NVIDIA Solved the Impossible!. [Video]. [https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers](https://www.youtube.com/watch?v=NRmkr50mkEE&ab_channel=TwoMinutePapers)
 
-[11] YouTube. (n.d.). Bob Laramee - Ray Marching and Signed Distance Functions. [Video]. [https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee](https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee)
+[11] YouTube. (n.d.). Bob Laramee - Ray Casting versus Ray Tracing (Volumetric): A Quick and Convenient Comparison. [Video]. [https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee](https://www.youtube.com/watch?v=ll4_79zKapU&ab_channel=BobLaramee]
 
-[12] YouTube. (n.d.). PyTorch - NeRF: Representing Scenes as Neural Radiance Fields (PyTorch Implementation). [Video]. [https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch](https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch)
+[12] YouTube. (n.d.). PyTorch - Rendering Volumes and Implicit Shapes in PyTorch3D. [Video]. [https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch](https://www.youtube.com/watch?v=g50RiDnfIfY&t=112s&ab_channel=PyTorch)
 
-[13] Peter Stefek. (n.d.). NeRF - A 3D Reconstruction Technique. [Webpage]. [https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.](https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.)
+[13] Peter Stefek. (n.d.). NeRF Explained. [Webpage]. [https://www.peterstefek.me/nerf.html](https://www.peterstefek.me/nerf.html#:~:text=NeRF%20relies%20on%20a%20very,is%20useful%20for%20understanding%20NeRF.)
 
-[14] DataGen Tech. (n.d.). Neural Radiance Field (NeRF). [Webpage]. [https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#](https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#)
+[14] DataGen. (n.d.). Neural Radiance Field (NeRF). [Webpage]. [https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#](https://datagen.tech/guides/synthetic-data/neural-radiance-field-nerf/#)
 
-[15] DTransposed. (n.d.). NeRF - A Brief Introduction. [Webpage]. [https://dtransposed.github.io/blog/2022/08/06/NeRF/](https://dtransposed.github.io/blog/2022/08/06/NeRF/)
+[15] d'Transposed. (2022, August 6). NeRF. [Blog post]. [https://dtransposed.github.io/blog/2022/08/06/NeRF/](https://dtransposed.github.io/blog/2022/08/06/NeRF/)
 
-[16] YouTube. (n.d.). Auctux - Ray Marching and Volumetric Rendering. [Video]. [https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux](https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux)
+[16] YouTube. (n.d.). Auctux - 2D Ray Marching Visualization: Python. [Video]. [https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux](https://www.youtube.com/watch?v=t8Aoq5Rkyf0&ab_channel=Auctux)
 
-[17] Jamie Wong. (n.d.). Ray Marching and Signed Distance Functions. [Webpage]. [https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/](https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/)
+[17] Jamie Wong. (2016, July 15). Ray Marching and Signed Distance Functions. [Blog post]. [https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/](https://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/)
 
-[18] YouTube. (n.d.). Károly Zsolnai-Fehér - The Inimitable Art of NeRF. [Video]. [https://www.youtube.com/watch?v=PeRRp1cFuH4](https://www.youtube.com/watch?v=PeRRp1cFuH4)
+[18] YouTube. (n.d.). CVPR 2022 Tutorial on Neural Fields in Computer Vision. [Video]. [https://www.youtube.com/watch?v=PeRRp1cFuH4](https://www.youtube.com/watch?v=PeRRp1cFuH4)
 
-[19] NeRF Studio. (n.d.). NeRFology - Instant NeRF and Gradient-Free Sampling. [Webpage]. [https://docs.nerf.studio/nerfology/methods/instant_ngp.html](https://docs.nerf.studio/nerfology/methods/instant_ngp.html)
+[19] NeRF Studio. (n.d.). Methods: Instant NGP. [Webpage]. [https://docs.nerf.studio/nerfology/methods/instant_ngp.html](https://docs.nerf.studio/nerfology/methods/instant_ngp.html)
+
+
 
