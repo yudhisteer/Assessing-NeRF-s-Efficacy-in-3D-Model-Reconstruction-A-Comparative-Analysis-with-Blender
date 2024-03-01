@@ -1,10 +1,48 @@
 # Assessing NeRF's Efficacy in 3D Model Reconstruction: A Comparative Analysis with Blender
 [NeRF](https://arxiv.org/pdf/2003.08934.pdf) in 2020 changed 3D reconstruction by showing how to _effectively optimize neural radiance fields to render photorealistic novel views of scenes with complicated geometry and appearance_. In my previous project, I showed how to do 3D reconstruction with Multi-View Stereo (MVS) and Structure from Motion (SfM) which can generate "decent results" However, NeRF uses a fully connected (non-convolutional) deep network to represent a scene that achieved state-of-the-art results.
 
-After taking the "Intro to Blender" by Studio X at UofR, I wanted to work more on my blender model using NeRF. I wanted to see how close we can match the 3D blender model if I randomly only generate images of the 3D model along with their intrinsic and extrinsic parameters, and input them into a NeRF model. This project focuses on building a vanilla-NeRF model from scratch based on the NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis (2020) paper. Note that latest NeRF methods use hashing as in [instant-NGP](https://docs.nerf.studio/nerfology/methods/instant_ngp.html) since it significantly reduces the required number of layers in MLP. Also, for purely Visual reconstruction [Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) is significantly superior to NeRFs. However, this remains a good exercise to understand the mechanics behind the paper which changed 3D reconstruction.
+After taking the "Intro to Blender" by Studio X at UofR, I wanted to work more on my blender model using NeRF. I wanted to see how close we can match the 3D blender model if I randomly only generate images of the 3D model along with their intrinsic and extrinsic parameters, and input them into a NeRF model. This project focuses on building a vanilla-NeRF model from scratch based on the NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis (2020) paper. Note that the latest NeRFs methods use hashing as in [instant-NGP](https://docs.nerf.studio/nerfology/methods/instant_ngp.html) since it significantly reduces the required number of layers in MLP. Also, for purely Visual reconstruction [Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) is significantly superior to NeRFs. However, this remains a good exercise to understand the mechanics behind the paper which changed 3D reconstruction.
 
 ## Dataset
+One drawback of NeRF (the one which we will implement) is that once trained, we cannot use the model to 3D reconstruct another object. That is, suppose we have images of pineapple and we use NeRF to 3D reconstruct the pineapple. We cannot use that same model to 3D reconstruct a banana for example. This means, that if we want to 3D reconstruct the banana, we need to train it specifically for these images and then extract the mesh. Hence, we generate our images from Blender by running the blender.py script inside Blender which has 100 images (90 training, 10 testing) by rotating the camera on a sphere of radius 3. For each image, we also extract the intrinsic and extrinsic parameters associated. Below is the associated file format for the "Clown" dataset:
 
+```python
+Image Extraction/
+│
+├── images/
+│   ├── train_0.png/
+│   ├── train_1.png/
+│   └── .../
+│   ├── test_0.png/
+│   ├── test_1.png/
+│   └── .../
+│
+├── train/
+│   ├── intrinsics/
+│   │   ├── train_0.txt/
+│   │   ├── train_1.txt/
+│   │   ├── train_2.txt/
+│   │   └── .../
+│   │
+│   └── pose/
+│       ├── train_0.txt/
+│       ├── train_1.txt/
+│       ├── train_2.txt/
+│       └── .../           
+│
+└── test/
+     ├── intrinsics/
+     │   ├── test_0.txt/
+     │   ├── test_1.txt/
+     │   ├── test_2.txt/
+     │   └── .../
+     │
+     └── pose/
+         ├── test_0.txt/
+         ├── test_1.txt/
+         ├── test_2.txt/
+         └── .../
+```
 
 ## Plan of Action
 
@@ -635,45 +673,7 @@ In the fall of 2023, I took an AR/VR class where I learned Blender from [Studio 
   </video>
 </div>
 
-I will then run a script inside Blender that will take pictures at different angles of the model and register the intrinsic and extrinsic parameters of the camera. Below is the folder storage format for test and train:
-
-```python
-Image Extraction/
-│
-├── images/
-│   ├── train_0.png/
-│   ├── train_1.png/
-│   └── .../
-│   ├── test_0.png/
-│   ├── test_1.png/
-│   └── .../
-│
-├── train/
-│   ├── intrinsics/
-│   │   ├── train_0.txt/
-│   │   ├── train_1.txt/
-│   │   ├── train_2.txt/
-│   │   └── .../
-│   │
-│   └── pose/
-│       ├── train_0.txt/
-│       ├── train_1.txt/
-│       ├── train_2.txt/
-│       └── .../           
-│
-└── test/
-     ├── intrinsics/
-     │   ├── test_0.txt/
-     │   ├── test_1.txt/
-     │   ├── test_2.txt/
-     │   └── .../
-     │
-     └── pose/
-         ├── test_0.txt/
-         ├── test_1.txt/
-         ├── test_2.txt/
-         └── .../
-```
+I will then run a script inside Blender that will take pictures at different angles of the 3D model and register the intrinsic and extrinsic parameters of the camera associated with each image.
 
 ![v2](https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/b6b1f5f9-77a0-4850-975c-5b2f06b78b24)
 
