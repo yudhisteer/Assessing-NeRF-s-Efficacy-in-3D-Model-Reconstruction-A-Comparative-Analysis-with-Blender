@@ -131,12 +131,12 @@ if __name__ == "__main__":
     L_pos = 10
     L_dir = 4
     hidden_dim = 256
-    batch_size = 16  # Choose an appropriate batch size
+    batch_size = 16
 
-    # Create an instance of the Nerf model
+    # Create instance of Nerf model
     model = NeRF_MLP(L_pos, L_dir, hidden_dim)
 
-    # Simulated data (random for testing)
+    # Simulated data
     xyz = torch.randn(batch_size, 3)
     print(xyz.shape)
     d = torch.randn(batch_size, 3)
@@ -145,6 +145,6 @@ if __name__ == "__main__":
     # Forward pass
     color, density = model.forward(xyz, d)
 
-    # Print the shapes of the outputs
+    # Print shapes of outputs
     print("Density shape:", density.shape)
     print("Color shape:", color.shape)
