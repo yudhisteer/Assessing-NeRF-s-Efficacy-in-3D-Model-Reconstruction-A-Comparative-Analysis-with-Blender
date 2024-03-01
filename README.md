@@ -670,6 +670,12 @@ Note that the output shape is ```(N, 3 + 6 * L)``` as the original input **x** h
 <a name="hs"></a>
 ### 1.4 Improvement 2: Hierarchical Volume Sampling
 
+A second improvement that the authors suggest to efficiently render 3D scenes is hierarchical volume sampling. It involves creating two levels of volume sampling: a **coarse** and a **fine** one. Initially, the scene is sampled at a coarse level to understand the basic **structure** and **distribution** of light and matter. The algorithm then performs a more **detailed** sampling at a fine level in areas of interest. 
+
+This method is like being smart about painting a picture. Instead of painting every part in detail from the start, you first figure out which parts of the picture are most important. Then, you spend more time and effort on those important parts to make them look really good. This way, you finish the picture faster and it looks better because you focus on the parts that matter the most.
+
+I will omit this part in the code for a simpler version of NeRF. This part is still a work in improvement for me. Patience!
+
 ----------
 <a name="mub"></a>
 ## 2. 3D Model using Blender
