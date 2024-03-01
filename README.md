@@ -830,7 +830,7 @@ Color shape: torch.Size([16, 3])
 We trained the model for ```5``` epochs, a batch size of ```1024```, and a learning rate of ```1e-3```  and below we see how the Mean Squared Error (MSE) loss curve starts at a relatively high-value then decreases sharply within the first few hundred iterations. The final loss value is quite low, close to zero, indicating good performance of the model on the training dataset
 
 <p align="center">
-  <img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/a24bf2be-549a-4639-aa01-d717b9a45cc4" width="40%" />
+  <img src="https://github.com/yudhisteer/Assessing-NeRF-s-Efficacy-in-3D-Model-Reconstruction-A-Comparative-Analysis-with-Blender/assets/59663734/a24bf2be-549a-4639-aa01-d717b9a45cc4" width="60%" />
 </p>
 
 
